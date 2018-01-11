@@ -40,8 +40,8 @@ void CMotors::ProcessMotors(String sCommand)
 		return;
 	}
 
-	SetSpeed(192);
-	delay(50);     //wait some time in order to give time for motor relays setting the new state
+	SetSpeed(192);	//constant speed for this kind of processing
+	delay(50);		//wait some time in order to give time for motor relays setting the new state
 }
 
 void CMotors::ProcessMotors(const byte valueX, const byte valueY)
@@ -146,7 +146,7 @@ void CMotors::SetMovement(EMovements movement)
 			iRightValue1 = 0; iRightValue2 = 0;
 			break;
 	}
-	if (!m_bVirtualMotor)
+	if (!m_bIsVirtualMotor)
 	{
 		digitalWrite(m_iPinAxisLeft1, iLeftValue1);
 		digitalWrite(m_iPinAxisLeft2, iLeftValue2);
@@ -158,7 +158,7 @@ void CMotors::SetMovement(EMovements movement)
 void CMotors::SetSpeed(int iSpeed)
 {
 	m_iCurrentSpeed = iSpeed;
-	if (!m_bVirtualMotor)
+	if (!m_bIsVirtualMotor)
 	{
 		if (iSpeed <= SPEED_UNIT)			//slow down speed to avoid sudden stop.
 		{
@@ -171,4 +171,3 @@ void CMotors::SetSpeed(int iSpeed)
 		analogWrite(m_iPinENB, iSpeed - 3);	//there is a hardware offset in ENB, so we compesate it by software
 	}
 }
-

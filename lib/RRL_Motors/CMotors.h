@@ -1,17 +1,8 @@
-// CMotors.h
-
-#ifndef _CMOTORS_h
-#define _CMOTORS_h
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include <arduino.h>
 
 enum EMovements { Stop, Up, Down, LeftUp, LeftDown, RightUp, RightDown };
-enum ESpeedMode { None, Slow, Normal, Fast, Turbo };	//0, 55, 110, 165, 220
-const int SPEED_UNIT = 55;
+enum ESpeedMode { None, Slow, Normal, Fast, Turbo }; // sets max. speed range, instead of 255, to values {0, 55, 110, 165, 220} by multiplying with SPEED_UNIT
+const int SPEED_UNIT = 55;	//base value for max. speed which is calculated SPEED_UNIT * int(ESpeedMode)
 
 class CMotors
 {
@@ -21,7 +12,7 @@ public:
 	{
 		m_CurrentMovement = Stop;
 		SetSpeedMode(Normal);
-		m_bVirtualMotor = true;
+		m_bIsVirtualMotor = true;
 	}
 
 	CMotors(int iPinAxisLeft1, int iPinAxisLeft2, int iPinAxisRight1, int iPinAxisRight2, int iPinENA, int iPinENB) : CMotors()
@@ -32,7 +23,7 @@ public:
 		m_iPinAxisRight2 = iPinAxisRight2;
 		m_iPinENA = iPinENA;
 		m_iPinENB = iPinENB;
-		m_bVirtualMotor = false;
+		m_bIsVirtualMotor = false;
 
 		pinMode(iPinAxisLeft1, OUTPUT);
 		pinMode(iPinAxisLeft2, OUTPUT);
@@ -94,23 +85,24 @@ public:
 		m_iMaxSpeed = SPEED_UNIT * speedMode;
 	}
 
+	/* for testing with mobile device. Sets only direction with pre-defined commands, constant speed not variable */
 	void ProcessMotors(String sCommand);
+	/* for using with joystick. Calculates direction and speed according to param coordinates (X, Y).
+	Maps joysticks within range (0, 255) in both axes -> direction with digital (0, 1) combination of pins
+													  -> speed range (0, 255) for PWN pins */
 	void ProcessMotors(const byte byteX, const byte byteY);
 
 	private:
 		// Fields
-		int m_iPinAxisLeft1, m_iPinAxisLeft2, m_iPinAxisRight1, m_iPinAxisRight2;
-		int m_iPinENA, m_iPinENB;
+		int m_iPinAxisLeft1, m_iPinAxisLeft2, m_iPinAxisRight1, m_iPinAxisRight2;	//config pins direction
+		int m_iPinENA, m_iPinENB;			//config pins speed
 		EMovements m_CurrentMovement;
 		ESpeedMode m_CurrentSpeedMode;
 		int m_iCurrentSpeed;
 		int m_iMaxSpeed;
-		bool m_bVirtualMotor;
+		bool m_bIsVirtualMotor;
 
 		// Private methods
 		void SetMovement(EMovements movement);
 		void SetSpeed(int iSpeed);
 };
-
-#endif
-
