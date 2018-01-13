@@ -1,6 +1,8 @@
 #include "CMelodies.h"
 
-void ToneMelody::PlayMelody(EMelodies melody)
+#pragma region Public methods
+
+void CMelodies::PlayMelody(EMelodies melody)
 {
 	switch (melody)
 	{
@@ -25,7 +27,11 @@ void ToneMelody::PlayMelody(EMelodies melody)
 	}
 }
 
-void ToneMelody::melody0() { // MELODIA_FANFARRIA 0
+#pragma endregion
+
+#pragma region Private methods
+
+void CMelodies::melody0() { // MELODIA_FANFARRIA 0
 	tone(m_pin, NOTE_C4, NOTE_NEGRA); delay(NOTE_NEGRA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_G3, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_G3, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
@@ -37,7 +43,7 @@ void ToneMelody::melody0() { // MELODIA_FANFARRIA 0
 	delay(10);
 }
 
-void ToneMelody::melody1() { // MELODIA_PODER_PERRUNO
+void CMelodies::melody1() { // MELODIA_PODER_PERRUNO
 	tone(m_pin, NOTE_B4, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_B4, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_B4, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
@@ -47,9 +53,8 @@ void ToneMelody::melody1() { // MELODIA_PODER_PERRUNO
 	delay(10);
 }
 
-void ToneMelody::melody2() { // MELODIA_ENCUENTROS_3A_FASE
-							   // Based on work by Erik Kringen
-							   //http://www.mycontraption.com/sound-effects-with-and-arduino/
+void CMelodies::melody2() {	// MELODIA_ENCUENTROS_3A_FASE
+							// Based on http://www.mycontraption.com/sound-effects-with-and-arduino/
 	tone(m_pin, NOTE_AS5, NOTE_NEGRA); delay(NOTE_NEGRA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_C6, NOTE_NEGRA); delay(NOTE_NEGRA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_GS4, NOTE_NEGRA); delay(NOTE_NEGRA_PAUSA); noTone(m_pin);
@@ -72,10 +77,9 @@ void ToneMelody::melody2() { // MELODIA_ENCUENTROS_3A_FASE
 	delay(10);
 }
 
-void ToneMelody::melody3() { // MELODIA_R2D2
-							   // Based on work by Erik Kringen and Dave Tucker
-							   //http://www.mycontraption.com/sound-effects-with-and-arduino/
-							   //http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
+void CMelodies::melody3() {	// MELODIA_R2D2
+							// Based on http://www.mycontraption.com/sound-effects-with-and-arduino/
+							//http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
 	tone(m_pin, NOTE_A7, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_G7, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
 	tone(m_pin, NOTE_E7, NOTE_CORCHEA); delay(NOTE_CORCHEA_PAUSA); noTone(m_pin);
@@ -95,29 +99,24 @@ void ToneMelody::melody3() { // MELODIA_R2D2
 	delay(10);
 }
 
-
-void ToneMelody::melody4() { // MELODIA_OHHH
+void CMelodies::melody4() { // MELODIA_OHHH
 	Glis(NOTE_C6, NOTE_C7, 6);
 	Glis(NOTE_C7, NOTE_C6, 5);
 	//for (int i=1000; i<2000; i=i*1.02) { tone(m_pin,i,10); };
 	//for (int i=2000; i>1000; i=i*.98) { tone(m_pin,i,10); delay(10);};
 }
 
-
-void ToneMelody::melody5() { // MELODIA_UHOH
+void CMelodies::melody5() { // MELODIA_UHOH
 	Glis(NOTE_C6, NOTE_DS6, 6);
 	delay(200);
 	Glis(NOTE_DS6, NOTE_CS6, 5);
 	//for (int i=1000; i<1244; i=i*1.01) { tone(m_pin,i,30); };
 	//delay(200);
 	//for (int i=1244; i>1108; i=i*.99) { tone(m_pin,i,30);  delay(30);};
-
 }
 
-
-void ToneMelody::Glis(int nota1, int nota2, int tasa) {
-	// By Dave Tucker
-	//http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
+void CMelodies::Glis(int nota1, int nota2, int tasa) {
+	// By Dave Tucker: http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
 	// Glissando = Slide
 	// Slides up or down from note1 to note2
 	// rate = 0 is fast and can be increased to slow the effect down
@@ -135,9 +134,8 @@ void ToneMelody::Glis(int nota1, int nota2, int tasa) {
 	noTone(m_pin);
 }
 
-void ToneMelody::Trem(int note, int length, int rate) {
-	// By Dave Tucker
-	//http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
+void CMelodies::Trem(int note, int length, int rate) {
+	// By Dave Tucker: http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
 	// Tremolo = Fast repetition of a note
 	// note = the note (from pitches.h)
 	// length = duration of the effect in msec
@@ -152,3 +150,5 @@ void ToneMelody::Trem(int note, int length, int rate) {
 		noTone(m_pin);
 	}
 }
+
+#pragma endregion

@@ -1,11 +1,20 @@
 #include "CMotors.h"
+#include "CCommon.h"
 
-CMotors motors(12, 13, 10, 11, 5, 6);
+#define PIN_LEFT1 12
+#define PIN_LEFT2 13
+#define PIN_RIGHT1 10
+#define PIN_RIGHT2 11
+#define PIN_ENA 5
+#define PIN_ENB 6
+#define SPEED   51
+
+CMotors motors(PIN_LEFT1, PIN_LEFT2, PIN_RIGHT1, PIN_RIGHT2, PIN_ENA, PIN_ENB;
 int m_iSpeed;
 
 void setup()
 {
-	m_iSpeed = 51;
+	m_iSpeed = SPEED;
 	motors.SetSpeedMode(Slow);
 
 	Serial.begin(9600);
@@ -17,7 +26,7 @@ void loop()
 	String sCommand;
 
 	//read from keyboard
-	sCommand = ReadKeyboard();
+	sCommand = CCommon.ReadKeyboard();
 
 	//execute received command
 	if (sCommand.length() > 0)

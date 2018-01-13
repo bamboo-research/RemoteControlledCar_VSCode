@@ -4,7 +4,8 @@ const int CENTER_Y_MINUS = 127 - 30;
 const int CENTER_Y_PLUS  = 127 + 30;
 const int SECTION = 70;
 
-// Public methods
+#pragma region Public methods
+
 void CMotors::ProcessMotors(String sCommand)
 {
 	if (sCommand == "u")
@@ -101,7 +102,10 @@ void CMotors::ProcessMotors(const byte valueX, const byte valueY)
 	}
 }
 
-// Private methods
+#pragma endregion
+
+#pragma region Private methods
+
 void CMotors::SetMovement(EMovements movement)
 {
 	int iLeftValue1, iLeftValue2;
@@ -171,3 +175,5 @@ void CMotors::SetSpeed(int iSpeed)
 		analogWrite(m_iPinENB, iSpeed - 3);	//there is a hardware offset in ENB, so we compesate it by software
 	}
 }
+
+#pragma endregion

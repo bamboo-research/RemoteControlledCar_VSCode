@@ -1,13 +1,4 @@
-// CJoystick.h
-
-#ifndef _CJOYSTICK_h
-#define _CJOYSTICK_h
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include <arduino.h>
 
 class CJoystick
 {
@@ -34,6 +25,3 @@ class CJoystick
 
 		// Private methods
 };
-
-#endif
-

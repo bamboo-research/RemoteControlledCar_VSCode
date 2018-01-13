@@ -4,7 +4,8 @@ const char INI_STR_CMD = '^';
 const char INI_BYT_CMD = '@';
 const char END_CMD = '#';
 
-// Public methods
+#pragma region Public methods
+
 void CBluetooth::Begin(long lBauds)
 {
 	m_bluetooth.begin(lBauds);
@@ -274,5 +275,7 @@ String CBluetooth::ProcessStringCommand(String sCommand)
 
 	return sValue;
 }
+
+#pragma endregion
 
 // Private methods

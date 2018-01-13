@@ -1,3 +1,10 @@
+/*
+Name:		RRLCarController.ino
+Created:	09/04/2016 12:15:51
+Author:		Haiqiang Xu
+Version:	1.0
+*/
+
 #include "CMotors.h"
 #include "CJoystick.h"
 #include "CBluetooth.h"
@@ -5,7 +12,12 @@
 const int iInButtonX = 4;
 const int iInButtonA = 3;
 const int iInButtonB = 5;
-const int outLed = 13;
+const int iOutLed = 13;
+const int iOutRx = 11;
+const int iOutTx = 12;
+const int iInAxisX = 0;
+const int iInAxisY = 1;
+const int iInButton = 8;
 
 ///#define DEBUG = true;
 #ifdef DEBUG
@@ -16,9 +28,9 @@ int m_iX, m_iY, m_iJoystickButton;
 int m_iCurrentSpeed, m_iCurrentMovement;
 String m_sButtons;
 
-CBluetooth m_bluetooth(11, 12, HC_05);	//RX, TX, EBluetoothAdapter
-CJoystick m_joystick(0, 1, 8);			//analogInputX, analogInputY, digitalInputButton
-CMotors* m_motors;						//create virtual motor to calculate motor movement, so send command only when needed
+CBluetooth m_bluetooth(iOutRx, iOutTx, HC_05);		//RX, TX, EBluetoothAdapter
+CJoystick m_joystick(iInAxisX, iInAxisY, iInButton);//analogInputX, analogInputY, digitalInputButton
+CMotors* m_motors;									//create virtual motor to calculate motor movement, so send command only when needed
 
 void setup()
 {
@@ -35,7 +47,7 @@ void setup()
 	pinMode(iInButtonX, INPUT_PULLUP);
 	pinMode(iInButtonA, INPUT_PULLUP);
 	pinMode(iInButtonB, INPUT_PULLUP);
-	pinMode(outLed, OUTPUT);			//activates Led output when a button press is detected
+	pinMode(iOutLed, OUTPUT);			//activates Led output when a button press is detected
 }
 
 void loop()
@@ -57,9 +69,9 @@ void loop()
 		m_sButtons += "j";
 	if (m_sButtons.length() > 0)
 	{
-		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
+		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to ï¿½wake up? bluetooth
 		m_bluetooth.SendCommand(m_sButtons);
-		digitalWrite(outLed, HIGH);
+		digitalWrite(iOutLed, HIGH);
 		while ( digitalRead(iInButtonX) == LOW ||
 				digitalRead(iInButtonA) == LOW ||
 				digitalRead(iInButtonB) == LOW ||
@@ -70,7 +82,7 @@ void loop()
 	}
 	else
 	{
-		digitalWrite(outLed, LOW);
+		digitalWrite(iOutLed, LOW);
 	}
 
 	//read from joystick and send through Bluetooth
@@ -83,7 +95,7 @@ void loop()
 		m_iCurrentSpeed = m_motors->GetCurrentSpeed();
 		m_iCurrentMovement = m_motors->GetCurrentMovement();
 
-		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
+		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to ï¿½wake up? bluetooth
 		m_bluetooth.SendCommand(m_iX, m_iY);
 		delay(150);					//wait between transmissions
 	}

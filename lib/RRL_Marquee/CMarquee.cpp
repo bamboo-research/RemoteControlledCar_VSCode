@@ -1,6 +1,7 @@
 #include "CMarquee.h"
 
-// Public methods
+#pragma region Public methods
+
 void CMarquee::Start()
 {
 	/*writeByte(255);
@@ -47,7 +48,10 @@ void CMarquee::Stop()
 
 }
 
-// Private methods
+#pragma endregion
+
+#pragma region Private methods
+
 void CMarquee::WriteByte(byte data)
 {
 	digitalWrite(m_iPinLatch, HIGH);
@@ -87,3 +91,5 @@ void CMarquee::ShiftWrite(int iPin, boolean bState)
 		digitalWrite(SRCLK_Pin, HIGH);
 	}*/
 }
+
+#pragma endregion

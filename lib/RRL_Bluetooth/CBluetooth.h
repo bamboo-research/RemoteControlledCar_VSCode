@@ -1,14 +1,5 @@
-// CBluetooth.h
-
-#ifndef _CBLUETOOTH_h
-#define _CBLUETOOTH_h
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-	#include "SoftwareSerial.h"
-#else
-	#include "WProgram.h"
-#endif
+#include <arduino.h>
+#include <SoftwareSerial.h>
 
 enum EBluetoothAdapter { HC_05, HC_06 };
 enum EATCommand { AT, AT_VERSION, AT_DEVICE_NAME, AT_BAUD, AT_PIN, AT_PARITY,		//common to both adapters
@@ -48,5 +39,3 @@ class CBluetooth
 
 		// Private methods
 };
-
-#endif

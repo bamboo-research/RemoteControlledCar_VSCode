@@ -1,6 +1,10 @@
 #include "CJoystick.h"
 
-CJoystick joystick(0, 1, 8);
+#define PIN_X 0
+#define PIN_Y 1
+#define PIN_BUTTON 8
+
+CJoystick joystick(PIN_X, PIN_Y, PIN_BUTTON);
 int m_iX, m_iY;
 int m_iButton;
 

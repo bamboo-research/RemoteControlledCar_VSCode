@@ -1,13 +1,4 @@
-// CMarquee.h
-
-#ifndef _CMARQUEE_h
-#define _CMARQUEE_h
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include <arduino.h>
 
 class CMarquee
 {
@@ -36,6 +27,3 @@ private:
 	void WriteByte(byte data);
 	void ShiftWrite(int iPin, boolean bState);
 };
-
-#endif
-

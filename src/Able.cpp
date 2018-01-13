@@ -1,24 +1,31 @@
 /*
 Name:		RRLCar_Able.ino
 Created:	09/04/2016 12:15:51
-Author:	Haiqiang Xu
+Author:		Haiqiang Xu
 Version:	1.0
 */
 
-#include <CBluetooth.h>
-#include <CMotors.h>
-#include <CMelodies.h>
+#include "CBluetooth.h"
+#include "CMotors.h"
+#include "CMelodies.h"
 #include "main.h"
 
 ///#define DEBUG = true;
 
 const int iOutSpeaker = 8;
 const int iOutLed1 = 13;
+const int iOutRx = 2;
+const int iOutTx = 3;
+const int iOutLeft1 = 11;
+const int iOutLeft2 = 12;
+const int iOutRight1 = 9;
+const int iOutRight2 = 10;
+const int iOutEna = 5;
+const int iOutEnb = 6;
 
-CBluetooth m_bluetooth(2, 3, HC_06);	//RX, TX, EBluetoothAdapter
-CMotors m_motors(11, 12, 9, 10, 5, 6);	//pinAxisLeft1, pinAxisLeft2 ][ pinAxisRight1, pinAxisRight2 ][ pinENA, pinENB
-										///NOTE: pinENA and pinENB must be PWM pins!!!!!
-ToneMelody m_melodies(iOutSpeaker);
+CBluetooth m_bluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
+CMotors m_motors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
+CMelodies m_melodies(iOutSpeaker);
 
 String m_sReadValue;
 int* m_byteValues;

@@ -1,16 +1,20 @@
 #include "CMelodies.h"
+#include "CCommon.h"
 
-ToneMelody melodies(13);
+#define PIN_OUT 13
+#define DELAY   100
+
+CMelodies melodies(PIN_OUT);
 
 void setup()
 {
 	Serial.begin(9600);
-	Serial.println("Debugging Horn module");
+	Serial.println("Debugging Melodies module");
 }
 
 void loop()
 {
-	String sValue = ReadKeyboard();
+	String sValue = CCommon.ReadKeyboard();
 	if (sValue.length() > 0)
 	{
 		if (sValue == "0")
@@ -27,7 +31,6 @@ void loop()
 			melodies.PlayMelody(Uhoh);
 
 		Serial.println(sValue);
-		delay(100);
+		delay(DELAY);
 	}
 }
-

@@ -1,16 +1,7 @@
-/*
-	Based on ToneMelody by Tom Igoe
-*/
+/* Based on ToneMelody by Tom Igoe */
+#include <arduino.h>
 
-#ifndef _CMELODIES_h
-#define _CMELODIES_h
-
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
+#pragma region Note_Defines
 // List of tones by Brett Hagman
 #define NOTE_B0  31
 #define NOTE_C1  33
@@ -110,14 +101,15 @@
 #define NOTE_BLANCA_PAUSA 660
 #define NOTE_REDONDA 1000
 #define NOTE_REDONDA_PAUSA 1320
+#pragma endregion
 
 enum EMelodies { Fanfarria, DogPower, ThirdPhase, R2D2, Ohhh, Uhoh };
 
 //
-class ToneMelody
+class CMelodies
 {
 	public:
-		ToneMelody(int pin)
+		CMelodies(int pin)
 		{
 			pinMode(pin, OUTPUT);
 			m_pin = pin;
@@ -126,7 +118,7 @@ class ToneMelody
 		void PlayMelody(EMelodies melody);
 
 	private:
-		int m_pin; // Pin del altavoz
+		int m_pin; 		// Pin del altavoz
 		void Glis(int note1, int note2, int rate); // Glissando
 		void Trem(int note1, int note2, int rate); // Tremolo
 		
@@ -137,6 +129,3 @@ class ToneMelody
 		void melody4(); // MELODY_OHHH
 		void melody5(); // MELODY_UHOH
 };
-
-#endif
-
