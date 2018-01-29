@@ -1,4 +1,33 @@
-
+RRL
+|--lib
+|   |-- <CommonLib>
+|   |   |-- CCommon.h
+|   |-- <RRL_Bluetooth>
+|   |   |-- CBluetooth.cpp
+|   |   |-- CBluetooth.h
+|   |   |-- RRL_Bluetooth.ino   <- TODO: unit testing file
+|   |-- <RRL_Joystick>
+|   |   |-- CJoystick.cpp
+|   |   |-- CJoystick.h
+|   |   |-- RRL_Joystick.ino    <- TODO: unit testing file
+|   |-- <RRL_Marquee>
+|   |   |-- CMarquee.cpp
+|   |   |-- CMarquee.h
+|   |   |-- RRL_Marquee.ino     <- TODO: unit testing file
+|   |-- <RRL_Melodies>
+|   |   |-- CMelodies.cpp
+|   |   |-- CMelodies.h
+|   |   |-- RRL_Melodies.ino    <- TODO: unit testing file
+|   |-- <RRL_Motors>
+|   |   |-- CMotors.cpp
+|   |   |-- CMotors.h
+|   |   |-- RRL_Motors.ino      <- TODO: unit testing file
+|   |   |-- Speed_voltage.txt
+|   |-- <SoftwareSerial>
+|--src
+|   |- main.c
+|   |- main.h    
+-----------
 This directory is intended for the project specific (private) libraries.
 PlatformIO will compile them to static libraries and link to executable file.
 

@@ -1,36 +1,11 @@
 /*
-Name:		RRLCarController.ino
+Name:		CController.c
 Created:	09/04/2016 12:15:51
 Author:		Haiqiang Xu
 Version:	1.0
 */
 
-#include "CMotors.h"
-#include "CJoystick.h"
-#include "CBluetooth.h"
-
-const int iInButtonX = 4;
-const int iInButtonA = 3;
-const int iInButtonB = 5;
-const int iOutLed = 13;
-const int iOutRx = 11;
-const int iOutTx = 12;
-const int iInAxisX = 0;
-const int iInAxisY = 1;
-const int iInButton = 8;
-
-///#define DEBUG = true;
-#ifdef DEBUG
-bool m_bContinuouslyPrint;
-#endif
-
-int m_iX, m_iY, m_iJoystickButton;
-int m_iCurrentSpeed, m_iCurrentMovement;
-String m_sButtons;
-
-CBluetooth m_bluetooth(iOutRx, iOutTx, HC_05);		//RX, TX, EBluetoothAdapter
-CJoystick m_joystick(iInAxisX, iInAxisY, iInButton);//analogInputX, analogInputY, digitalInputButton
-CMotors* m_motors;									//create virtual motor to calculate motor movement, so send command only when needed
+#include "CController.h"
 
 void setup()
 {
@@ -41,7 +16,6 @@ void setup()
 	m_bContinuouslyPrint = true;
 #endif
 
-	m_motors = new CMotors();
 	m_iCurrentSpeed = 0;
 	m_iCurrentMovement = 0;
 	pinMode(iInButtonX, INPUT_PULLUP);
