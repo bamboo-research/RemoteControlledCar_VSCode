@@ -31,7 +31,7 @@ RRL
 |   |   |-- CAble.h
 |   |-- <SoftwareSerial>
 |--src
-|   |- main.c
+|   |- main.cpp
 |   |- main.h    
 -----------
 This directory is intended for the project specific (private) libraries.

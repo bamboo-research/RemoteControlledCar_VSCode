@@ -1,5 +1,5 @@
 - Bluetooth:
-	x ¿Protection? against non requested pairment
+	x Protection against non requested pairment
 	- Generic command processor
 	
 - Joystick:
@@ -15,7 +15,7 @@
 
 - RRLCar_XXX:
 	- Display for error show
-	- ¿Laser beam?
+	- Â¿Laser beam?
 	- Aerodynamics (wings):
 		- Frontal
 		- Rear

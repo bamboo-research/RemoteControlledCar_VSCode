@@ -9,7 +9,7 @@ Version:	1.0
 
 void CController::setup()
 {
-	m_bluetooth.Begin(9600);
+	m_bluetooth->Begin(9600);
 #ifdef DEBUG
 	Serial.begin(9600);
 	Serial.println("Debugging RRL CarController");
@@ -39,17 +39,17 @@ void CController::loop()
 		m_sButtons += "a";
 	if (digitalRead(iInButtonB) == LOW)
 		m_sButtons += "b";
-	if (m_joystick.ReadButton() == LOW)
+	if (m_joystick->ReadButton() == LOW)
 		m_sButtons += "j";
 	if (m_sButtons.length() > 0)
 	{
-		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to �wake up? bluetooth
-		m_bluetooth.SendCommand(m_sButtons);
+		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
+		m_bluetooth->SendCommand(m_sButtons);
 		digitalWrite(iOutLed, HIGH);
 		while ( digitalRead(iInButtonX) == LOW ||
 				digitalRead(iInButtonA) == LOW ||
 				digitalRead(iInButtonB) == LOW ||
-				m_joystick.ReadButton() == LOW )	//wait while buttons are pressed instead of setting a fixed delay
+				m_joystick->ReadButton() == LOW )	//wait while buttons are pressed instead of setting a fixed delay
 		{
 			delay(30);
 		}
@@ -60,8 +60,8 @@ void CController::loop()
 	}
 
 	//read from joystick and send through Bluetooth
-	m_iX = m_joystick.ReadAxisX();
-	m_iY = m_joystick.ReadAxisY();
+	m_iX = m_joystick->ReadAxisX();
+	m_iY = m_joystick->ReadAxisY();
 	m_motors->ProcessMotors((byte)m_iX, (byte)m_iY);
 	if (abs(m_motors->GetCurrentSpeed() - m_iCurrentSpeed) > 3 ||
 		m_motors->GetCurrentMovement() != m_iCurrentMovement)
@@ -69,8 +69,8 @@ void CController::loop()
 		m_iCurrentSpeed = m_motors->GetCurrentSpeed();
 		m_iCurrentMovement = m_motors->GetCurrentMovement();
 
-		m_bluetooth.Send(" ");		//WORKAROUND: send dummy value to �wake up? bluetooth
-		m_bluetooth.SendCommand(m_iX, m_iY);
+		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
+		m_bluetooth->SendCommand(m_iX, m_iY);
 		delay(150);					//wait between transmissions
 	}
 #endif
@@ -86,7 +86,7 @@ void CController::Debug()
 		m_sButtons += "a";
 	if (digitalRead(iInButtonB) == LOW)
 		m_sButtons += "b";
-	if (m_joystick.ReadButton() == LOW)
+	if (m_joystick->ReadButton() == LOW)
 		m_sButtons += "j";
 
 	if (m_bContinuouslyPrint)
@@ -103,8 +103,8 @@ void CController::Debug()
 	}
 
 	//read from joystick and send through Bluetooth
-	m_iX = m_joystick.ReadAxisX();
-	m_iY = m_joystick.ReadAxisY();
+	m_iX = m_joystick->ReadAxisX();
+	m_iY = m_joystick->ReadAxisY();
 	if (m_bContinuouslyPrint)
 	{
 		m_motors->ProcessMotors((byte)m_iX, (byte)m_iY);
@@ -134,8 +134,8 @@ void CController::Debug()
 			m_bContinuouslyPrint = false;
 
 		Serial.println("-> " + m_sButtons);
-		m_bluetooth.Send(m_sButtons);
-		m_sButtons = m_bluetooth.Receive();
+		m_bluetooth->Send(m_sButtons);
+		m_sButtons = m_bluetooth->Receive();
 		Serial.println("BT -> " + m_sButtons);
 	}
 #endif
