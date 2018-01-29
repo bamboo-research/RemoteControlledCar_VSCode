@@ -1,12 +1,12 @@
 /*
- Name:		RRLCar_Bekir.ino
+ Name:		CBekir.cpp
  Created:	22/04/2016 18:04:56
  Author:	AcerE521
 */
 
-#include <Arduino.h>
+#include "CBekir.h"
 
-void setup()
+void CBekir::setup()
 {
 	pinMode(10, OUTPUT);
 	pinMode(11, OUTPUT);
@@ -14,7 +14,7 @@ void setup()
 	pinMode(13, OUTPUT);
 }
 
-void loop()
+void CBekir::loop()
 {
 	//leds
 	digitalWrite(10, HIGH);

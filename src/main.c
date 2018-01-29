@@ -1,7 +1,7 @@
 #include "main.h"
 #include "CController.h"
 
-CController *m_controller;
+CController* m_controller;
 
 void setup() {
 	process();

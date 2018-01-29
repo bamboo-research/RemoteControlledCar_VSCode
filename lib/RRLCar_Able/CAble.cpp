@@ -1,38 +1,15 @@
 /*
-Name:		RRLCar_Able.ino
+Name:		CAble.cpp
 Created:	09/04/2016 12:15:51
 Author:		Haiqiang Xu
 Version:	1.0
 */
 
-#include "CBluetooth.h"
-#include "CMotors.h"
-#include "CMelodies.h"
-#include "main.h"
+#include "CAble.h"
 
-///#define DEBUG = true;
-
-const int iOutSpeaker = 8;
-const int iOutLed1 = 13;
-const int iOutRx = 2;
-const int iOutTx = 3;
-const int iOutLeft1 = 11;
-const int iOutLeft2 = 12;
-const int iOutRight1 = 9;
-const int iOutRight2 = 10;
-const int iOutEna = 5;
-const int iOutEnb = 6;
-
-CBluetooth m_bluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
-CMotors m_motors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
-CMelodies m_melodies(iOutSpeaker);
-
-String m_sReadValue;
-int* m_byteValues;
-
-void setup() {
+void CAble::setup() {
     // put your setup code here, to run once:
-    m_bluetooth.Begin(9600);
+    m_bluetooth->Begin(9600);
 	pinMode(iOutLed1, OUTPUT);
 
 #ifdef DEBUG
@@ -41,13 +18,13 @@ void setup() {
 #endif
 }
 
-void loop() {
+void CAble::loop() {
     // put your main code here, to run repeatedly:
     	char c;
 	String sCommand;
 
 	//read from Bluetooth module
-	m_sReadValue = m_bluetooth.Receive();
+	m_sReadValue = m_bluetooth->Receive();
 #ifdef DEBUG
 	if (m_sReadValue.length() > 0)
 		Serial.println("BT->" + m_sReadValue);
@@ -64,11 +41,11 @@ void loop() {
 		sCommand += c;				//concatenate chars until '#' end command is detected
 		if (c == '#')
 		{
-			if (m_bluetooth.CommandType(sCommand) == ArrayBytes)
+			if (m_bluetooth->CommandType(sCommand) == ArrayBytes)
 			{
 				ProcessJoystick(sCommand);
 			}
-			else if (m_bluetooth.CommandType(sCommand) == StringCommand)
+			else if (m_bluetooth->CommandType(sCommand) == StringCommand)
 			{
 				ProcessButtons(sCommand);
 			}
@@ -77,10 +54,10 @@ void loop() {
 	}
 }
 
-void ProcessJoystick(String sCommand)
+void CAble::ProcessJoystick(String sCommand)
 {
 	//process joystick values
-	m_byteValues = m_bluetooth.ProcessArrayBytesCommand(sCommand);
+	m_byteValues = m_bluetooth->ProcessArrayBytesCommand(sCommand);
 
 #ifdef DEBUG
 	//NOTE: by printing the pointer to array values, seems that affects these values
@@ -90,16 +67,16 @@ void ProcessJoystick(String sCommand)
 #endif
 
 	//move motors accordingly
-	m_motors.ProcessMotors((byte)m_byteValues[0], (byte)m_byteValues[1]);
+	m_motors->ProcessMotors((byte)m_byteValues[0], (byte)m_byteValues[1]);
 #ifdef DEBUG
 	Serial.println("Motor movement: " + m_motors.GetCurrMovString());
 #endif
 }
 
-void ProcessButtons(String sCommand)
+void CAble::ProcessButtons(String sCommand)
 {
 	//process buttons values
-	sCommand = m_bluetooth.ProcessStringCommand(sCommand);
+	sCommand = m_bluetooth->ProcessStringCommand(sCommand);
 
 	if (sCommand == "j")
 	{
@@ -111,30 +88,30 @@ void ProcessButtons(String sCommand)
 	}
 	else if (sCommand == "x")
 	{
-		m_melodies.PlayMelody(Fanfarria);
+		m_melodies->PlayMelody(Fanfarria);
 	}
 	else if (sCommand == "a")
 	{
-		m_melodies.PlayMelody(DogPower);
+		m_melodies->PlayMelody(DogPower);
 	}
 	else if (sCommand == "h")
 	{
-		m_melodies.PlayMelody(R2D2);
+		m_melodies->PlayMelody(R2D2);
 	}
 	else if (sCommand == "b")
 	{
-		int iSpeedMode = m_motors.GetSpeedMode();
+		int iSpeedMode = m_motors->GetSpeedMode();
 		if (iSpeedMode == Slow)
-			m_motors.SetSpeedMode(Normal);
+			m_motors->SetSpeedMode(Normal);
 		else if (iSpeedMode == Normal)
-			m_motors.SetSpeedMode(Fast);
+			m_motors->SetSpeedMode(Fast);
 		else if (iSpeedMode == Fast)
-			m_motors.SetSpeedMode(Turbo);
+			m_motors->SetSpeedMode(Turbo);
 		else
-			m_motors.SetSpeedMode(Slow);
+			m_motors->SetSpeedMode(Slow);
 
 		//make a sound to confirm SpeedMode
-		iSpeedMode = m_motors.GetSpeedMode();
+		iSpeedMode = m_motors->GetSpeedMode();
 		for (int i = 0; i < iSpeedMode; i++)
 		{
 			digitalWrite(iOutSpeaker, HIGH);
@@ -146,7 +123,7 @@ void ProcessButtons(String sCommand)
 	else
 	{
 		//Process command from Smartphone/Tablet
-		m_motors.ProcessMotors(sCommand);
+		m_motors->ProcessMotors(sCommand);
 	}
 
 #ifdef DEBUG

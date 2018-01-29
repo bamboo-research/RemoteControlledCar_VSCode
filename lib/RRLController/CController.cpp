@@ -7,7 +7,7 @@ Version:	1.0
 
 #include "CController.h"
 
-void setup()
+void CController::setup()
 {
 	m_bluetooth.Begin(9600);
 #ifdef DEBUG
@@ -24,7 +24,7 @@ void setup()
 	pinMode(iOutLed, OUTPUT);			//activates Led output when a button press is detected
 }
 
-void loop()
+void CController::loop()
 {
 	m_sButtons = "";
 
@@ -76,7 +76,7 @@ void loop()
 #endif
 }
 
-void Debug()
+void CController::Debug()
 {
 #ifdef DEBUG
 	//read from buttons and send through Bluetooth
