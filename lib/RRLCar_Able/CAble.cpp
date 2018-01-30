@@ -7,15 +7,18 @@ Version:	1.0
 
 #include "CAble.h"
 
+#pragma region Public methods
+
 void CAble::setup() {
     // put your setup code here, to run once:
     m_bluetooth->Begin(9600);
 	pinMode(iOutLed1, OUTPUT);
 
-#ifdef DEBUG
-	Serial.begin(9600);
-	Serial.println("Debugging car Akai");
-#endif
+	if (m_bDebug)
+	{
+		Serial.begin(9600);
+		Serial.println("Debugging car Akai");
+	}
 }
 
 void CAble::loop() {
@@ -25,11 +28,13 @@ void CAble::loop() {
 
 	//read from Bluetooth module
 	m_sReadValue = m_bluetooth->Receive();
-#ifdef DEBUG
-	if (m_sReadValue.length() > 0)
+
+	//FOR DEBUG!
+	if (m_bDebug && m_sReadValue.length() > 0)
 		Serial.println("BT->" + m_sReadValue);
-#endif
-	if (m_sReadValue.length() <= 2)	//filter those messages without a minimum length
+
+	//filter those messages without a minimum length
+	if (m_sReadValue.length() <= 2)
 	{
 		return;
 	}
@@ -54,23 +59,27 @@ void CAble::loop() {
 	}
 }
 
+#pragma endregion
+
+#pragma region Private methods
+
 void CAble::ProcessJoystick(String sCommand)
 {
 	//process joystick values
 	m_byteValues = m_bluetooth->ProcessArrayBytesCommand(sCommand);
 
-#ifdef DEBUG
-	//NOTE: by printing the pointer to array values, seems that affects these values
-	//NOTE2: in fact, printing anything before calling ProcessMotors is provoking VERY strange behaviors in the variables
-	//Serial.println("ArrayBytes command: " + String(m_byteValues[0]) + "," + String(m_byteValues[1]));
-	//Serial.println("Joystick command: " + sCommand);
-#endif
-
 	//move motors accordingly
 	m_motors->ProcessMotors((byte)m_byteValues[0], (byte)m_byteValues[1]);
-#ifdef DEBUG
-	Serial.println("Motor movement: " + m_motors.GetCurrMovString());
-#endif
+
+	//FOR DEBUG!
+	if (m_bDebug)
+	{
+		//NOTE: by printing the pointer to array values, seems that affects these values
+		//NOTE2: in fact, printing anything before calling ProcessMotors is provoking VERY strange behaviors in the variables
+		//Serial.println("ArrayBytes command: " + String(m_byteValues[0]) + "," + String(m_byteValues[1]));
+		//Serial.println("Joystick command: " + sCommand);
+		Serial.println("Motor movement: " + m_motors->GetCurrMovString());
+	}
 }
 
 void CAble::ProcessButtons(String sCommand)
@@ -126,7 +135,8 @@ void CAble::ProcessButtons(String sCommand)
 		m_motors->ProcessMotors(sCommand);
 	}
 
-#ifdef DEBUG
-	Serial.println("Button command: " + sCommand);
-#endif
+	if (m_bDebug)
+		Serial.println("Button command: " + sCommand);
 }
+
+#pragma endregion

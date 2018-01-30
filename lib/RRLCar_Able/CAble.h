@@ -9,8 +9,6 @@ Version:	1.0
 #include "CMotors.h"
 #include "CMelodies.h"
 
-//#define DEBUG = true;
-
 const int iOutSpeaker = 8;
 const int iOutLed1 = 13;
 const int iOutRx = 2;
@@ -31,7 +29,13 @@ public:
 		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
 		m_motors = new CMotors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
 		m_melodies = new CMelodies(iOutSpeaker);
-	}
+		m_bDebug = false;
+	};
+
+	CAble(bool bDebug) : CAble()
+	{
+		m_bDebug = bDebug;
+	};
 	
 	// Public methods
 	void setup();
@@ -43,8 +47,10 @@ private:
 	CMelodies* m_melodies;
 	String m_sReadValue;
 	int* m_byteValues;
+	
+	bool m_bDebug;
 
 	// Private methods
 	void ProcessJoystick(String sCommand);
 	void ProcessButtons(String sCommand);
-}
+};

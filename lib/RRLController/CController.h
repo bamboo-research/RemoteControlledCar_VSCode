@@ -8,8 +8,7 @@ Version:	1.0
 #include "CBluetooth.h"
 #include "CMotors.h"
 #include "CJoystick.h"
-
-//#define DEBUG = true;
+#include "CCommon.h"
 
 const int iInButtonX = 4;
 const int iInButtonA = 3;
@@ -30,7 +29,13 @@ public:
 		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_05);		//RX, TX, EBluetoothAdapter
 		m_joystick = new CJoystick(iInAxisX, iInAxisY, iInButton);	//analogInputX, analogInputY, digitalInputButton
 		m_motors = new CMotors();									//create virtual motor to calculate motor movement, so send command only when needed
-	}
+		m_bDebug = false;
+	};
+
+	CController(bool bDebug) : CController()
+	{
+		m_bDebug = bDebug;
+	};
 
 	// Public methods
 	void setup();
@@ -43,10 +48,10 @@ private:
 	int m_iX, m_iY, m_iJoystickButton;
 	int m_iCurrentSpeed, m_iCurrentMovement;
 	String m_sButtons;
-#ifdef DEBUG
+
+	bool m_bDebug;
 	bool m_bContinuouslyPrint;
-#endif
-	
+
 	// Private methods
 	void Debug();
 };
