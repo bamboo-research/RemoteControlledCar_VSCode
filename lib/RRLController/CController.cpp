@@ -6,7 +6,6 @@ Version:	1.0
 */
 
 #include "CController.h"
-#include "CCommon.h"
 
 #pragma region Public methods
 
@@ -134,7 +133,7 @@ void CController::Debug()
 	}
 
 	//AT command only in DEBUG mode. Don't FORGET press module button in order to send AT commands!!!!!
-	m_sButtons = CCommon.ReadKeyboard();		//re-use global variable
+	m_sButtons = Common.ReadKeyboard();		//re-use global variable
 	if (m_sButtons.length() > 0)
 	{
 		if (m_sButtons == "c")

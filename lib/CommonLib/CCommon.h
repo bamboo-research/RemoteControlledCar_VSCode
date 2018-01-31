@@ -3,7 +3,7 @@
 class CCommon
 {
 public:
-    String ReadKeyboard()
+    static String ReadKeyboard()
     {
         String stringValue = "";
         do
@@ -17,10 +17,10 @@ public:
 
         return stringValue;
     };
-        
-// private:
-//     // Disable creating instances of this object
-//     CCommon() { }
-}
+private:
+    // Disable creating instances of this object
+    CCommon() { };
+};
 
+//instance for use in external libraries to access directly to static methods
 extern CCommon Common;
