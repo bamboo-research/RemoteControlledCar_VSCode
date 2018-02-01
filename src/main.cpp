@@ -1,15 +1,15 @@
 #include "main.h"
-#include "CController.h"
+#include "CAble.h"
 
-CController* m_controller;
+CAble* m_car;
 
 void setup() {
 	process();
-    m_controller = new CController();
-    m_controller->setup();
+    m_car = new CAble();
+    m_car->setup();
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
-    m_controller->loop();
+    m_car->loop();
 }
