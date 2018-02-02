@@ -46,7 +46,7 @@ private:
 	CMotors* m_motors;
 	CMelodies* m_melodies;
 	String m_sReadValue;
-	int* m_byteValues;
+	int* m_intValues;
 	
 	bool m_bDebug;
 

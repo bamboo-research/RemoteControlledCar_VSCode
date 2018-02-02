@@ -66,17 +66,17 @@ void CAble::loop() {
 void CAble::ProcessJoystick(String sCommand)
 {
 	//process joystick values
-	m_byteValues = m_bluetooth->ProcessArrayBytesCommand(sCommand);
+	m_intValues = m_bluetooth->ProcessArrayBytesCommand(sCommand);
 
 	//move motors accordingly
-	m_motors->ProcessMotors((byte)m_byteValues[0], (byte)m_byteValues[1]);
+	m_motors->ProcessMotors((byte)m_intValues[0], (byte)m_intValues[1]);
 
 	//FOR DEBUG!
 	if (m_bDebug)
 	{
 		//NOTE: by printing the pointer to array values, seems that affects these values
 		//NOTE2: in fact, printing anything before calling ProcessMotors is provoking VERY strange behaviors in the variables
-		//Serial.println("ArrayBytes command: " + String(m_byteValues[0]) + "," + String(m_byteValues[1]));
+		//Serial.println("ArrayBytes command: " + String(m_intValues[0]) + "," + String(m_intValues[1]));
 		//Serial.println("Joystick command: " + sCommand);
 		Serial.println("Motor movement: " + m_motors->GetCurrMovString());
 	}

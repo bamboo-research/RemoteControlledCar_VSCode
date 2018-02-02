@@ -1,14 +1,14 @@
 #include "CBluetooth.h"
 
-const char INI_STR_CMD = '^';
-const char INI_BYT_CMD = '@';
-const char END_CMD = '#';
+const char INI_STR_CMD = '^';	//init character when sending String command
+const char INI_BYT_CMD = '@';	//init character when sending array of bytes command
+const char END_CMD = '#';		//common end character command
 
 #pragma region Public methods
 
 void CBluetooth::Begin(long lBauds)
 {
-	m_bluetooth.begin(lBauds);
+	m_Serial.begin(lBauds);
 }
 
 void CBluetooth::SendATCommandHC06(EATCommand command, String sValue)
@@ -162,12 +162,12 @@ String CBluetooth::Receive()
 	m_sMessage = "";
 	do
 	{
-		if (m_bluetooth.available() > 0)
+		if (m_Serial.available() > 0)
 		{
-			m_sMessage += (char)m_bluetooth.read();	//append char to String
+			m_sMessage += (char)m_Serial.read();	//append char to String
 		}
-		delay(3);     //delay to allow buffer to fill -> NEEDED!!
-	} while (m_bluetooth.available());
+		delay(3);     //delay to allow buffer to fill -> NEEDED!!.
+	} while (m_Serial.available());
 
 	return m_sMessage;
 }
@@ -177,12 +177,12 @@ void CBluetooth::Send(String sMessage)
 	if (sMessage.length() > 0)
 	{
 		if (m_adapter == HC_05 && sMessage.length() >= 2 && sMessage[0] == 'A' && sMessage[1] == 'T')
-			m_bluetooth.println(sMessage + "\n");	//Add carriage + line feed only when sending AT commands
+			m_Serial.println(sMessage + "\n");	//Add CR + LF (from println) + extra LF only when sending AT commands
 		else
-			m_bluetooth.print(sMessage);
+			m_Serial.print(sMessage);
 	
 		//Make code wait for a string to be finished sending because Serial.print() function returns almost immediately
-		m_bluetooth.flush();
+		m_Serial.flush();
 	}
 }
 
@@ -198,7 +198,7 @@ void CBluetooth::SendCommand(byte byteX, byte byteY)
 {
 	m_sMessage = String(INI_BYT_CMD);
 	m_sMessage += String(byteX) + ",";
-	m_sMessage += String(byteY) + String(END_CMD);	//example of what's sending: "@243,240#"
+	m_sMessage += String(byteY) + String(END_CMD);	//example of what's sending: "@243,240#" in decimal format
 	Send(m_sMessage);
 }
 
@@ -216,18 +216,18 @@ ECommandType CBluetooth::CommandType(String sCommand)
 
 int* CBluetooth::ProcessArrayBytesCommand(String sCommand)
 {
-	int arrayValues[2];
+	int arrayValues[2];					//2 values in format [X, Y]
 	char c;
 	String s = "";
 	int j = 0;
 
-	//example of what's receiving: "@243,240#"
+	//example of what's receiving: "@243,240#" in decimal format
 	for (int i = 0; i < sCommand.length(); i++)
 	{
 		c = sCommand[i];
 		if (c == ',' || c == END_CMD)
 		{
-			arrayValues[j] = s.toInt();
+			arrayValues[j] = s.toInt();	//TODO: instead of decimal format, see if hex is acceptable to save comm traffic
 			j++;
 			s = "";
 		}
@@ -240,7 +240,7 @@ int* CBluetooth::ProcessArrayBytesCommand(String sCommand)
 			s += c;
 		}
 
-		//extra checks just in case
+		//extra checks just in case. TODO: check if necessary
 		if (c == END_CMD || j >= (sizeof(arrayValues) / sizeof(int)))
 		{
 			break;
