@@ -1,15 +1,15 @@
 #include "main.h"
-#include "CTestController.h"
+#include "CTestCar.h"
 
-CTestController* m_testController;
+CTestCar* m_testCar;
 
 void setup() {
 	process();
-    m_testController = new CTestController();
-    m_testController->setup();
+    m_testCar = new CTestCar();
+    m_testCar->setup();
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
-    m_testController->loop();
+    m_testCar->loop();
 }
