@@ -13,25 +13,11 @@ void CAble::setup() {
     // put your setup code here, to run once:
     m_bluetooth->Begin(9600);
 	pinMode(iOutLed1, OUTPUT);
-
-	if (m_bDebug)
-	{
-		Serial.begin(9600);
-		Serial.println("Debugging car Akai");
-	}
 }
 
 void CAble::loop() {
-    // put your main code here, to run repeatedly:
-    	char c;
-	String sCommand;
-
 	//read from Bluetooth module
 	m_sReadValue = m_bluetooth->Receive();
-
-	//FOR DEBUG!
-	if (m_bDebug && m_sReadValue.length() > 0)
-		Serial.println("BT->" + m_sReadValue);
 
 	//filter those messages without a minimum length
 	if (m_sReadValue.length() <= 2)
@@ -42,19 +28,19 @@ void CAble::loop() {
 	//process received command
 	for (int i = 0; i < m_sReadValue.length(); i++)
 	{
-		c = m_sReadValue[i];
-		sCommand += c;				//concatenate chars until '#' end command is detected
-		if (c == '#')
+		m_char = m_sReadValue[i];
+		m_sCmd += m_char;			//concatenate chars until '#' end command is detected
+		if (m_char == '#')
 		{
-			if (m_bluetooth->CommandType(sCommand) == ArrayBytes)
+			if (m_bluetooth->CommandType(m_sCmd) == ArrayBytes)
 			{
-				ProcessJoystick(sCommand);
+				ProcessJoystick(m_sCmd);
 			}
-			else if (m_bluetooth->CommandType(sCommand) == StringCommand)
+			else if (m_bluetooth->CommandType(m_sCmd) == StringCommand)
 			{
-				ProcessButtons(sCommand);
+				ProcessButtons(m_sCmd);
 			}
-			sCommand = "";
+			m_sCmd = "";
 		}
 	}
 }
@@ -71,15 +57,8 @@ void CAble::ProcessJoystick(String sCommand)
 	//move motors accordingly
 	m_motors->ProcessMotors((byte)m_intValues[0], (byte)m_intValues[1]);
 
-	//FOR DEBUG!
-	if (m_bDebug)
-	{
-		//NOTE: by printing the pointer to array values, seems that affects these values
-		//NOTE2: in fact, printing anything before calling ProcessMotors is provoking VERY strange behaviors in the variables
-		//Serial.println("ArrayBytes command: " + String(m_intValues[0]) + "," + String(m_intValues[1]));
-		//Serial.println("Joystick command: " + sCommand);
-		Serial.println("Motor movement: " + m_motors->GetCurrMovString());
-	}
+	//set m_sLastCmd -> mainly for debug
+	m_sLastCmd = "Cmd: " + sCommand + " | Motor movement: " + m_motors->GetCurrMovString();
 }
 
 void CAble::ProcessButtons(String sCommand)
@@ -135,8 +114,8 @@ void CAble::ProcessButtons(String sCommand)
 		m_motors->ProcessMotors(sCommand);
 	}
 
-	if (m_bDebug)
-		Serial.println("Button command: " + sCommand);
+	//set m_sLastCmd -> mainly for debug
+	m_sLastCmd = "Cmd: " + sCommand;
 }
 
 #pragma endregion

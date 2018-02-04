@@ -29,17 +29,22 @@ public:
 		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
 		m_motors = new CMotors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
 		m_melodies = new CMelodies(iOutSpeaker);
-		m_bDebug = false;
-	};
-
-	CAble(bool bDebug) : CAble()
-	{
-		m_bDebug = bDebug;
 	};
 	
 	// Public methods
 	void setup();
 	void loop();
+
+	// Data accessors
+	String GetLastCommand()
+	{
+		return m_sLastCmd;
+	};
+
+	String GetReadValue()
+	{
+		return m_sReadValue;
+	};
 private:
 	// Fields
 	CBluetooth* m_bluetooth;
@@ -47,9 +52,9 @@ private:
 	CMelodies* m_melodies;
 	String m_sReadValue;
 	int* m_intValues;
+	char m_char;
+	String m_sCmd, m_sLastCmd;
 	
-	bool m_bDebug;
-
 	// Private methods
 	void ProcessJoystick(String sCommand);
 	void ProcessButtons(String sCommand);

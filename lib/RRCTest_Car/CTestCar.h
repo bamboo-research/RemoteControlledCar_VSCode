@@ -10,9 +10,7 @@ public:
         Serial.begin(9600);
         Serial.println("Debugging Car Able");
 
-        m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
-		m_motors = new CMotors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
-		m_melodies = new CMelodies(iOutSpeaker);
+        m_CarAble = new CAble();
     };
 
     // Public methods
@@ -21,14 +19,8 @@ public:
     
 private:
     // Fields
-    CBluetooth* m_bluetooth;
-	CMotors* m_motors;
-	CMelodies* m_melodies;
+    CAble* m_CarAble;
 	String m_sReadValue;
-	int* m_intValues;
-    char m_char;
-	String m_sCmd;
 
     // Private methods
-    void ProcessButtons(String sCommand);
 };

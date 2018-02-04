@@ -68,7 +68,7 @@ void CTestController::loop()
     else
         digitalWrite(iOutLed, LOW);
 
-    //delay is to try reduce power. TODO: check http://www.gammon.com.au/power to save real power because seems delay don't save
+    //delay is to try reduce power
     delay(50);
 }
 
