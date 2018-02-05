@@ -1,4 +1,7 @@
-RRL
+RCC
+|--extra-libs
+|   |-- <LowPower>
+|   |-- <ArduinoThread>
 |--lib
 |   |-- <CommonLib>
 |   |   |-- CCommon.h
@@ -30,7 +33,6 @@ RRL
 |   |-- <RCCTest_Controller>
 |   |   |-- CTestController.cpp
 |   |   |-- CTestController.h
-|   |-- <SoftwareSerial>
 |--src
 |   |- main.cpp
 |   |- main.h    

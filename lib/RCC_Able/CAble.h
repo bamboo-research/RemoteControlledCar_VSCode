@@ -56,6 +56,7 @@ private:
 	String m_sCmd, m_sLastCmd;
 	
 	// Private methods
+	static void WakeUp();
 	void ProcessJoystick(String sCommand);
 	void ProcessButtons(String sCommand);
 };

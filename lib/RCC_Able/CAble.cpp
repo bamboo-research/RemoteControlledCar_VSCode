@@ -6,6 +6,8 @@ Version:	1.0
 */
 
 #include "CAble.h"
+#include "LowPower.h"
+
 
 #pragma region Public methods
 
@@ -16,7 +18,14 @@ void CAble::setup() {
 }
 
 void CAble::loop() {
-	//read from Bluetooth module
+	// Save power with LowerPower. Allow wake up interrupt when pin 2 detects change voltage.
+	// Interrupt 0 corresponds I/O pin 2 and Interrupt 1 corresponds I/O pin 3 on Uno/Nano.
+    attachInterrupt(0, CAble::WakeUp, CHANGE);
+    
+    // Enter power down state with ADC and BOD module disabled. Wake up when interrupt detected
+    LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF); 
+
+	//read from Bluetooth module once woken up
 	m_sReadValue = m_bluetooth->Receive();
 
 	//filter those messages without a minimum length
@@ -48,6 +57,13 @@ void CAble::loop() {
 #pragma endregion
 
 #pragma region Private methods
+
+void CAble::WakeUp()
+{
+    // Just a handler for the pin interrupt.
+	// Disable external interrupt on wake up pin.
+    detachInterrupt(0); 
+}
 
 void CAble::ProcessJoystick(String sCommand)
 {
