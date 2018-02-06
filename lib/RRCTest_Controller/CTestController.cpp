@@ -58,6 +58,7 @@ void CTestController::loop()
 			m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
 			m_bluetooth->SendCommand(m_iX, m_iY);
             m_sMsgToShow += " | BT -> send cmd [X, Y]";
+            m_sMsgToShow += " | Speed: " + String(m_iCurrentSpeed);
 		}
         Serial.println(m_sMsgToShow);
     }

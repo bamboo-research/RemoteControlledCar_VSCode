@@ -8,6 +8,7 @@ Version:	1.0
 #include "CBluetooth.h"
 #include "CMotors.h"
 #include "CMelodies.h"
+#include "CCommon.h"
 
 const int iOutSpeaker = 8;
 const int iOutLed1 = 13;
@@ -56,7 +57,6 @@ private:
 	String m_sCmd, m_sLastCmd;
 	
 	// Private methods
-	static void WakeUp();
 	void ProcessJoystick(String sCommand);
 	void ProcessButtons(String sCommand);
 };

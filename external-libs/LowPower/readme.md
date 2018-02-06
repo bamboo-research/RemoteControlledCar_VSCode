@@ -1,4 +1,6 @@
-## Comparison power save modes:
+Sources 1.60 comes from [LowPower](https://github.com/rocketscream/Low-Power) and all credits goes for them.
+
+### Comparison power save modes:
 
 | MODE  | WDT   | ADC   | BOD   | T2    | T1    | T0    | SPI   | USART0| TWI   | CURRENT
 | ---   | ---   | ---   | ---   | ---   | ---   | ---   | ---   | ---   | ---   | ---
@@ -33,6 +35,7 @@
 |Power Down    | Off    | Off    | On    | –    | –    | –    | –    | –    | –    | 18.6 µA
 |Power Down    | Off    | On    | On    | –    | –    | –    | –    | –    | –    | 110.0 µA
 |Power Down    | On    | On    | On    | –    | –    | –    | –    | –    | –    | 113.9 µA
+
 Legend:
 - WDT: Watch Dog Timer
 - ADC: Analog-to-Digital converter module
@@ -42,7 +45,7 @@ Legend:
 - USART0: Serial port module
 - TWI: Two-wire interface (I2C)
 
-Comparison sleep modes power consumption set on setup() with nothing in loop() and with the bare-bone ATMega328 chip + Voltage regulators (for +5V and +3.3V) + USB interface chip (for the USB port) + "power" LED instead of a full equipped Arduino Uno:
+### Comparison sleep modes power consumption set on setup() with nothing in loop() and with the bare-bone ATMega328 chip + Voltage regulators (for +5V and +3.3V) + USB interface chip (for the USB port) + "power" LED instead of a full equipped Arduino Uno:
 - SLEEP_MODE_IDLE:          15 mA
 - SLEEP_MODE_ADC:           6.5 mA
 - SLEEP_MODE_PWR_SAVE:      1.62 mA
@@ -50,10 +53,10 @@ Comparison sleep modes power consumption set on setup() with nothing in loop() a
 - SLEEP_MODE_STANDBY:       0.84 mA
 - SLEEP_MODE_PWR_DOWN:      0.36 mA
 
-Time to wake-up if components are disabled:
+### Time to wake-up if components are disabled:
 - BOD: 60 µs
 
-Wake-up Sources:
+### Wake-up Sources:
 - INT and PCINT: all power save modes
 - TWI address match: all power save modes
 - Timer2: IDLE, ADC, PWR_SAVE, EXT_STANDBY

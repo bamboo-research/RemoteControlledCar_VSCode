@@ -29,12 +29,6 @@ public:
 		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_05);		//RX, TX, EBluetoothAdapter
 		m_joystick = new CJoystick(iInAxisX, iInAxisY, iInButton);	//analogInputX, analogInputY, digitalInputButton
 		m_motors = new CMotors();									//create virtual motor to calculate motor movement, so send command only when needed
-		m_bDebug = false;
-	};
-
-	CController(bool bDebug) : CController()
-	{
-		m_bDebug = bDebug;
 	};
 
 	// Public methods
@@ -49,9 +43,5 @@ private:
 	int m_iCurrentSpeed, m_iCurrentMovement;
 	String m_sButtons;
 
-	bool m_bDebug;
-	bool m_bContinuouslyPrint;
-
 	// Private methods
-	void Debug();
 };
