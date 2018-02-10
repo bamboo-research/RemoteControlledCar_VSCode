@@ -1,7 +1,6 @@
 /*
 Name:		CAble.h
 Created:	09/04/2016 12:15:51
-Author:		Haiqiang Xu
 Version:	1.0
 */
 
@@ -13,7 +12,7 @@ Version:	1.0
 const int iOutSpeaker = 8;
 const int iOutLed1 = 13;
 const int iOutRx = 2;
-const int iOutTx = 3;
+const int iOutTx = 3;		//physically not needed in normal functionality. Needed when AT commands need to be send
 const int iOutLeft1 = 11;
 const int iOutLeft2 = 12;
 const int iOutRight1 = 9;

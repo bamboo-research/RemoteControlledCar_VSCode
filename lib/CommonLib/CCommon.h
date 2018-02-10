@@ -23,15 +23,16 @@ public:
     {
         // Allow wake up interrupt when pin 2 detects change voltage.
         // Interrupt 0 corresponds I/O pin 2 and Interrupt 1 corresponds I/O pin 3 on Uno/Nano.
-        attachInterrupt(0, WakeUp, CHANGE);
+        attachInterrupt(0, WakeUp, RISING);
         
         // Enter power down state with ADC and BOD module disabled. Wake up when interrupt detected
-        LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF); 
+        LowPower.powerDown(SLEEP_8S, ADC_ON, BOD_OFF); 
     };
 
-    static void Sleep()
+    static void Sleep(period_t period)
     {
-        LowPower.powerDown(SLEEP_120MS, ADC_OFF, BOD_OFF);
+        //Nano transmit garbage characters to PC through HardwareSerial if USART0 is OFF
+        LowPower.idle(period, ADC_ON, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
     };
 private:
     // Disable creating instances of this object

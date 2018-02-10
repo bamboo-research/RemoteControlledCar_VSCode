@@ -1,7 +1,6 @@
 /*
 Name:		CAble.cpp
 Created:	09/04/2016 12:15:51
-Author:		Haiqiang Xu
 Version:	1.0
 */
 
@@ -16,13 +15,13 @@ void CAble::setup() {
 }
 
 void CAble::loop() {
-	// Power down with LowerPower to save power
-	Common.PowerDown();
+	// Sleep to save power
+	Common.Sleep(SLEEP_120MS);
 
 	//read from Bluetooth module once woken up
 	m_sReadValue = m_bluetooth->Receive();
 
-	//filter those messages without a minimum length
+	//filter those messages without a minimum length (at least INI_CMD + END_CMD)
 	if (m_sReadValue.length() <= 2)
 	{
 		return;

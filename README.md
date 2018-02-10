@@ -1,4 +1,4 @@
-# RemoteControlledCar_VSCode
+# RemoteControlledCar for Visual Studio Code
 
 Software for Arduino Uno-based remote controlled car together with a Arduino Nano-based remote controlling.
 
@@ -14,7 +14,7 @@ Software for Arduino Uno-based remote controlled car together with a Arduino Nan
 - Optional dip switch to turn on/off the car
 - Car structure, up to your imagination :-)
 
-### Hardware components used for Remote Controlled Car
+### Hardware components used for Remote Controller
 
 - Arduino [Nano](https://store.arduino.cc/arduino-nano) or compatible
 - Battery or powerbank [ 5V,  +1450 mAh ]
@@ -29,4 +29,5 @@ Software for Arduino Uno-based remote controlled car together with a Arduino Nan
 The software is splitted into [Abstraction Layers](https://en.wikipedia.org/wiki/Abstraction_layer) so the responsability of each layer are very limited and will make easier the growth and maintenance of the project in a Architectural point of view. Combined with a objected-oriented language such as C++ accepted by Arduino, makes the implementation closer to this approach.
 
 TODO: explain library functionalities
+
 TODO: electrical schematics

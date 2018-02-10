@@ -1,7 +1,6 @@
 /*
 Name:		CController.c
 Created:	09/04/2016 12:15:51
-Author:		Haiqiang Xu
 Version:	1.0
 */
 
@@ -22,28 +21,29 @@ void CController::setup()
 
 void CController::loop()
 {
-	m_sButtons = "";
+	m_sSendValue = "";
+	m_sLastCmd = "";
 
 	//read from buttons and send through Bluetooth
 	if (digitalRead(iInButtonX) == LOW)
-		m_sButtons += "x";
+		m_sSendValue += "x";
 	if (digitalRead(iInButtonA) == LOW)
-		m_sButtons += "a";
+		m_sSendValue += "a";
 	if (digitalRead(iInButtonB) == LOW)
-		m_sButtons += "b";
+		m_sSendValue += "b";
 	if (m_joystick->ReadButton() == LOW)
-		m_sButtons += "j";
-	if (m_sButtons.length() > 0)
+		m_sSendValue += "j";
+	if (m_sSendValue.length() > 0)
 	{
-		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
-		m_bluetooth->SendCommand(m_sButtons);
+		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up/synchronize? bluetooth
+		m_bluetooth->SendCommand(m_sSendValue);
 		digitalWrite(iOutLed, HIGH);
 		while ( digitalRead(iInButtonX) == LOW ||
 				digitalRead(iInButtonA) == LOW ||
 				digitalRead(iInButtonB) == LOW ||
 				m_joystick->ReadButton() == LOW )	//wait while buttons are pressed instead of setting a fixed delay
 		{
-			delay(30);
+			Common.Sleep(SLEEP_30MS);
 		}
 	}
 	else
@@ -56,14 +56,19 @@ void CController::loop()
 	m_iY = m_joystick->ReadAxisY();
 	m_motors->ProcessMotors((byte)m_iX, (byte)m_iY);
 	if (abs(m_motors->GetCurrentSpeed() - m_iCurrentSpeed) > 3 ||
-		m_motors->GetCurrentMovement() != m_iCurrentMovement)
+			m_motors->GetCurrentMovement() != m_iCurrentMovement)
 	{
-		m_iCurrentSpeed = m_motors->GetCurrentSpeed();
+		m_iCurrentSpeed    = m_motors->GetCurrentSpeed();
 		m_iCurrentMovement = m_motors->GetCurrentMovement();
 
-		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up? bluetooth
+		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up/synchronize? bluetooth
 		m_bluetooth->SendCommand(m_iX, m_iY);
-		Common.Sleep();				//sleep between transmissions
+			
+		//set m_sLastCmd -> mainly for debug
+		m_sLastCmd = "BT-> " + m_bluetooth->GetMessage() + " | Speed: " + String(m_iCurrentSpeed) + " | X: " + String(m_iX) + " | Y: " + String(m_iY);
+	
+		//sleep between transmissions
+		Common.Sleep(SLEEP_30MS);
 	}
 }
 

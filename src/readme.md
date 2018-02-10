@@ -2,7 +2,7 @@
 
 ### Bluetooth:
 	x Protection against non requested pairment
-	- Remove delays and unnecessary DUMMY messages
+	x Remove delays and unnecessary DUMMY messages
 	- Generic command processor
 	
 ### Joystick:
@@ -15,12 +15,12 @@
 
 ### RRC_Controller:
 	x Extra buttons to activate features
-	x Avoid unnecessary transmission
+	x Avoid unnecessary comm transmission
 		x Calculate motor direction on Controller part and not in Car part
 	- Change speed/movement in progress when SpeedMode (button) is changed
 
 ### RRCar:
-	- Display for error show
+	- Display or LED blinking for error show
 	- ¿Laser beam?
 	- Aerodynamics (wings):
 		- Frontal
@@ -30,6 +30,6 @@
 		x Limit to 6V per motor? -> limit by SW
 
 ### Common Software:
-	- Check power consumption by replacing Delay() -> http://www.gammon.com.au/power to save real power because seems delay doesn't save
+	x Check power consumption by replacing Delay() with LowPower library functions to save power
 	- Implement ProtoThreading to avoid for example in RRCar, not allowing other operations when playing CMelodies
 	  or not allowing change range speed through button when car is in move

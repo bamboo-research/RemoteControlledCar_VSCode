@@ -22,6 +22,7 @@ class CBluetooth
 		void SendATCommandHC05(EATCommand command, String sValue);
 		void SendATCommandHC06(EATCommand command, String sValue);
 
+		String DirectReceive();
 		String Receive();
 		void Send(String sMessage);
 		
@@ -31,6 +32,11 @@ class CBluetooth
 		int* ProcessArrayBytesCommand(String sCommand);
 		String ProcessStringCommand(String sCommand);
 
+		//Data accessor
+		String GetMessage()
+		{
+			return m_sMessage;
+		};
 	private:
 		// Fields
 		SoftwareSerial m_Serial;

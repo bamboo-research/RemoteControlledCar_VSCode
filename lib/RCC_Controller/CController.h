@@ -1,7 +1,6 @@
 /*
 Name:		CController.h
 Created:	09/04/2016 12:15:51
-Author:		Haiqiang Xu
 Version:	1.0
 */
 
@@ -34,14 +33,20 @@ public:
 	// Public methods
 	void setup();
 	void loop();
+
+	// Data accessors
+	String GetLastCommand()
+	{
+		return m_sLastCmd;
+	};
 private:
 	//Fields
 	CBluetooth* m_bluetooth;
 	CJoystick* m_joystick;
 	CMotors* m_motors;
-	int m_iX, m_iY, m_iJoystickButton;
+	int m_iX, m_iY;
 	int m_iCurrentSpeed, m_iCurrentMovement;
-	String m_sButtons;
+	String m_sSendValue, m_sLastCmd;
 
 	// Private methods
 };

@@ -10,9 +10,7 @@ public:
         Serial.begin(9600);
         Serial.println("Debugging CController");
 
-        m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_05);
-        m_joystick = new CJoystick(iInAxisX, iInAxisY, iInButton);
-        m_motors = new CMotors();
+        m_Controller = new CController();
     };
 
     // Public methods
@@ -21,16 +19,8 @@ public:
     
 private:
     // Fields
-    CBluetooth* m_bluetooth;
-    CJoystick* m_joystick;
-    CMotors* m_motors;
-    String m_sBtMsg;        //bluetooth messages
-    int m_iX, m_iY;
-    int m_iPrevX, m_iPrevY; //axes
-    int m_iButton;
-    int m_iPrevButton;      //joystick button
-    int m_iCurrentSpeed, m_iCurrentMovement;    //motors
-    String m_sMsgToShow;
+    CController* m_Controller;
+    String m_sSendValue;
 
     // Private methods
 };

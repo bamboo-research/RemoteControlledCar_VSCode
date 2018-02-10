@@ -11,16 +11,15 @@ void CTestCar::loop()
 {
 	m_CarAble->loop();
 
-    //read from Bluetooth module and check it has minimum length
+    //read from Bluetooth module received message
 	m_sReadValue = m_CarAble->GetReadValue();
-    if (m_sReadValue.length() <= 2)
+    if (m_sReadValue.length() >= 2)
 	{
-		return;
-	}
-    Serial.println("BT->" + m_sReadValue);
+        Serial.println("BT->" + m_sReadValue);
 
-    //process received command
-	Serial.println(m_CarAble->GetLastCommand());
+        //read processed command (joystick, movement, etc.)
+        Serial.println(m_CarAble->GetLastCommand());
+	}
 }
 
 #pragma endregion
