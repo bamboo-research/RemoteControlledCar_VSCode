@@ -1,7 +1,6 @@
 RCC
 |--extra-libs
 |   |-- <LowPower>
-|   |-- <ArduinoThread>
 |--lib
 |   |-- <CommonLib>
 |   |   |-- CCommon.h

@@ -247,7 +247,7 @@ ECommandType CBluetooth::CommandType(String sCommand)
 	return Unknown;
 }
 
-int *CBluetooth::ProcessArrayBytesCommand(String sCommand)
+int* CBluetooth::ProcessArrayBytesCommand(String sCommand)
 {
 	int arrayValues[2]; //2 values in format [X, Y]
 	char c;
