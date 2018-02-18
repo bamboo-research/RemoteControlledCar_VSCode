@@ -13,6 +13,7 @@ void CController::setup()
 	m_bluetooth->Begin(9600);
 	m_iCurrentSpeed = 0;
 	m_iCurrentMovement = 0;
+	m_lLastTime = millis();
 	pinMode(iInButtonX, INPUT_PULLUP);
 	pinMode(iInButtonA, INPUT_PULLUP);
 	pinMode(iInButtonB, INPUT_PULLUP);
@@ -37,6 +38,7 @@ void CController::loop()
 	{
 		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up/synchronize? bluetooth
 		m_bluetooth->SendCommand(m_sSendValue);
+		m_lLastTime = millis();		//reset count to PowerDown
 		digitalWrite(iOutLed, HIGH);
 		while ( digitalRead(iInButtonX) == LOW ||
 				digitalRead(iInButtonA) == LOW ||
@@ -63,12 +65,21 @@ void CController::loop()
 
 		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up/synchronize? bluetooth
 		m_bluetooth->SendCommand(m_iX, m_iY);
-			
+		m_lLastTime = millis();		//reset count to PowerDown
+		
 		//set m_sLastCmd -> mainly for debug
 		m_sLastCmd = "BT-> " + m_bluetooth->GetMessage() + " | Speed: " + String(m_iCurrentSpeed) + " | X: " + String(m_iX) + " | Y: " + String(m_iY);
 	
 		//sleep between transmissions
 		Common.Sleep(SLEEP_30MS);
+	}
+
+	// check if enter Power Down to save battery
+	if (millis() - m_lLastTime >= lTimeToPowerDown)
+	{
+		digitalWrite(iOutLed, LOW);		//switch off to save power
+		Common.PowerDown();
+		m_sLastCmd = "RCC -> PowerDown off";
 	}
 }
 

@@ -21,17 +21,18 @@ public:
 
     static void PowerDown()
     {
-        // Allow wake up interrupt when pin 2 detects change voltage.
+        // Allow wake up interrupt when input pin detects LOW signal. Seems that FALLING/RISING/CHANGE signals doesn't work to wake-up arduino from PowerDown
         // Interrupt 0 corresponds I/O pin 2 and Interrupt 1 corresponds I/O pin 3 on Uno/Nano.
-        attachInterrupt(0, WakeUp, RISING);
+        attachInterrupt(1, WakeUp, LOW);
         
         // Enter power down state with ADC and BOD module disabled. Wake up when interrupt detected
-        LowPower.powerDown(SLEEP_8S, ADC_ON, BOD_OFF); 
+        LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
+        //delay(75); // allows the arduino to fully wake up.
     };
 
     static void Sleep(period_t period)
     {
-        //Nano transmit garbage characters to PC through HardwareSerial if USART0 is OFF
+        //NOTE: Nano transmits garbage characters to PC through HardwareSerial if USART0 is OFF
         LowPower.idle(period, ADC_ON, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
     };
 private:
@@ -42,7 +43,7 @@ private:
     {
         // Just a handler for the pin interrupt.
         // Disable external interrupt on wake up pin.
-        detachInterrupt(0); 
+        detachInterrupt(1);
     };
 };
 

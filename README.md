@@ -1,11 +1,11 @@
-# RemoteControlledCar for Visual Studio Code
+# RemoteControlledCar build with Arduino Uno/Nano and communication via Bluetooth
 
-Software for Arduino Uno-based remote controlled car together with a Arduino Nano-based remote controlling.
+Software for Arduino Uno-based remote controlled car together with a Arduino Nano-based remote controlling and intercommunication via Bluetooth modules.
 
 ### Hardware components used for Remote Controlled Car
 
 - Arduino [Uno](https://store.arduino.cc/arduino-uno-rev3) or compatible
-- Battery or powerbank [ 5V,  +1450 mAh ] to power-up Arduino and its components (bluetooth module, speaker, etc.)
+- Battery or powerbank [ 5V,  +1450 mAh ] to power-up Arduino and its components (bluetooth module and speaker)
 - Battery or powerbank [ 12V, +4000 mAh ] to power-up motors
 - Bluetooth HC-06 slave module
 - L298N Driver to control motors
@@ -28,7 +28,7 @@ Software for Arduino Uno-based remote controlled car together with a Arduino Nan
 
 The software is splitted into [Abstraction Layers](https://en.wikipedia.org/wiki/Abstraction_layer) so the responsability of each layer are very limited and will make easier the growth and maintenance of the project in a Architectural point of view. Combined with a objected-oriented language such as C++ accepted by Arduino, makes the implementation closer to this approach.
 
-### Libraries functionalities
+### Libraries functionalities -> TODO: move to Wiki section
 
 #### Bluetooth library
 
@@ -50,3 +50,5 @@ Reads the axis values from the Joystick. List of functions:
 - 
 
 TODO: electrical schematics
+
+TODO: photos car and controller prototypes

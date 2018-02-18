@@ -10,15 +10,16 @@ Version:	1.0
 #include "CCommon.h"
 
 const int iOutSpeaker = 8;
-const int iOutLed1 = 13;
-const int iOutRx = 2;
-const int iOutTx = 3;		//physically not needed in normal functionality. Needed when AT commands need to be send
+const int iOutLed = 13;
+const int iOutRx = 3;			//changed from 2 to 3 because Common.PowerDown is linked to INT 1 for wake up -> INPUT 3 is now linked to Rx which is used to wake-up when BT receives data
+const int iOutTx = 2;			//physically not needed in normal functionality. Needed when AT commands need to be send
 const int iOutLeft1 = 11;
 const int iOutLeft2 = 12;
 const int iOutRight1 = 9;
 const int iOutRight2 = 10;
 const int iOutEna = 5;
 const int iOutEnb = 6;
+const unsigned long lTimeToPowerDown = 60000;
 
 class CAble
 {
@@ -54,6 +55,7 @@ private:
 	int* m_intValues;
 	char m_char;
 	String m_sCmd, m_sLastCmd;
+	unsigned long m_lLastTime;
 	
 	// Private methods
 	void ProcessJoystick(String sCommand);

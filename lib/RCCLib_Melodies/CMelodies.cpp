@@ -24,6 +24,30 @@ void CMelodies::PlayMelody(EMelodies melody)
 		case Uhoh:
 			melody5();
 			break;
+		case R2D2_2:
+			r2D2();
+			break;	
+		case CloseEncounters:
+			closeEncounters();
+			break;
+		case Ariel:
+			ariel();
+			break;
+		case Uhoh2:
+			uhoh();
+			break;
+		case Squeak:
+			squeak();
+			break;
+		case Waka:
+			waka();
+			break;
+		case Catcall:
+			catcall();
+			break;
+		case Ohhh2:
+			ohhh();
+			break;
 	}
 }
 
@@ -115,6 +139,186 @@ void CMelodies::melody5() { // MELODIA_UHOH
 	//for (int i=1244; i>1108; i=i*.99) { tone(m_pin,i,30);  delay(30);};
 }
 
+void CMelodies::r2D2()
+{
+	Beep(3520,100); //A 
+	Beep(3136,100); //G 
+	Beep(2637,100); //E 
+	Beep(2093,100); //C
+	Beep(2349,100); //D 
+	Beep(3951,100); //B 
+	Beep(2793,100); //F 
+	Beep(4186,100); //C 
+	Beep(3520,100); //A 
+	Beep(3136,100); //G 
+	Beep(2637,100); //E 
+	Beep(2093,100); //C
+	Beep(2349,100); //D 
+	Beep(3951,100); //B 
+	Beep(2793,100); //F 
+	Beep(4186,100); //C 
+}
+
+void CMelodies::closeEncounters()
+{
+	Beep(932,300); //B b
+	delay(50);
+	Beep(1047,300); //C
+	delay(50);
+	Beep(831,300); //A b
+	delay(50);
+	Beep(415,300); //A b
+	delay(50);
+	Beep(622,500); //E b   
+	delay(500);     
+
+	Beep(466,300); //B b
+	delay(100);
+	Beep(524,300); //C
+	delay(100);
+	Beep(415,300); //A b
+	delay(100);
+	Beep(208,300); //A b
+	delay(100);
+	Beep(311,500); //E b   
+	delay(500);  
+
+	Beep(233,300); //B b
+	delay(200);
+	Beep(262,300); //C
+	delay(200);
+	Beep(208,300); //A b
+	delay(500);
+	Beep(104,300); //A bp
+	delay(550);
+	Beep(156,500); //E b      
+}
+
+void CMelodies::ariel()
+{
+	Beep(1047,300); //C
+	delay(50);
+	Beep(1175,300); //D
+	delay(50);
+	Beep(1245,600); //D#
+	delay(250);
+
+	Beep(1175,300); //D
+	delay(50);
+	Beep(1245,300); //D#
+	delay(50);
+	Beep(1397,600); //F
+	delay(250);
+
+	Beep(1047,300); //C
+	delay(50);
+	Beep(1175,300); //D
+	delay(50);
+	Beep(1245,500); //D#
+	delay(50);          
+	Beep(1175,300); //D
+	delay(50);
+	Beep(1245,300); //D#
+	delay(50);             
+	Beep(1175,300); //D
+	delay(50);
+	Beep(1245,300); //D#
+	delay(50);
+	Beep(1397,600); //F
+	delay(50);
+}
+
+void CMelodies::uhoh()
+{
+	Beep(415,100); //C
+    delay(80);
+    Beep(279,100); //C
+    delay(80);
+}
+
+void CMelodies::squeak()
+{
+	for (int i=100; i<5000; i=i*1.45)
+	{
+		Beep(i,60);
+	}
+	delay(10);
+	for (int i=100; i<6000; i=i*1.5)
+	{
+		Beep(i,20);
+	}
+}
+
+void CMelodies::waka()
+{
+	for (int i=1000; i<3000; i=i*1.05)
+	{
+		Beep(i,10);
+	}
+	delay(100);
+	for (int i=2000; i>1000; i=i*.95)
+	{
+		Beep(i,10);
+	}
+	for (int i=1000; i<3000; i=i*1.05)
+	{
+		Beep(i,10);
+	}
+	delay(100);
+	for (int i=2000; i>1000; i=i*.95)
+	{
+		Beep(i,10);
+	}
+	for (int i=1000; i<3000; i=i*1.05)
+	{
+		Beep(i,10);
+	}
+	delay(100);
+	for (int i=2000; i>1000; i=i*.95)
+	{
+		Beep(i,10);
+	}
+	for (int i=1000; i<3000; i=i*1.05)
+	{
+		Beep(i,10);
+	}
+	delay(100);
+	for (int i=2000; i>1000; i=i*.95)
+	{
+		Beep(i,10);
+	}
+}
+
+void CMelodies::catcall()
+{
+	for (int i=1000; i<5000; i=i*1.05)
+	{
+		Beep(i,10);
+	}
+	delay(300);
+
+	for (int i=1000; i<3000; i=i*1.03)
+	{
+		Beep(i,10);
+	}
+	for (int i=3000; i>1000; i=i*.97)
+	{
+		Beep(i,10);
+	}
+}
+
+void CMelodies::ohhh()
+{
+	for (int i=1000; i<2000; i=i*1.02)
+	{
+		Beep(i, 10);
+	}
+	for (int i=2000; i>1000; i=i*.98)
+	{
+		Beep(i, 10);
+	}
+}
+
 void CMelodies::Glis(int nota1, int nota2, int tasa) {
 	// By Dave Tucker: http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
 	// Glissando = Slide
@@ -134,20 +338,17 @@ void CMelodies::Glis(int nota1, int nota2, int tasa) {
 	noTone(m_pin);
 }
 
-void CMelodies::Trem(int note, int length, int rate) {
-	// By Dave Tucker: http://dtucker.co.uk/make/arduino-using-my-melodyutils-library-for-r2-d2-style-chirps.html
-	// Tremolo = Fast repetition of a note
-	// note = the note (from pitches.h)
-	// length = duration of the effect in msec
-	// rate = number of repetitions
-
-	int note_duration = length / rate;
-	int pauseBetweenNotes = rate * (1 + rate / length);
-
-	for (int i = 0; i <= rate; i++) {
-		tone(m_pin, note, note_duration);
-		delay(pauseBetweenNotes);
-		noTone(m_pin);
+void CMelodies::Beep(int frequencyHertz, long milliseconds)     // the sound producing function  
+{
+	int x;
+	long delayAmount = (long)(1000000 / frequencyHertz);
+	long loopTime = (long)((milliseconds * 1000) / (delayAmount * 2));
+	for (x = 0; x < loopTime; x++)
+	{
+		digitalWrite(m_pin, LOW); //HIGH); -> for negated buzzers like in Multifunction shield
+		delayMicroseconds(delayAmount);
+		digitalWrite(m_pin, HIGH);//LOW);
+		delayMicroseconds(delayAmount);
 	}
 }
 

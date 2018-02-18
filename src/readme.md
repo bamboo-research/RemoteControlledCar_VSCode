@@ -3,7 +3,6 @@
 ### Bluetooth:
 - [x] Protection against non requested pairment
 - [x] Remove delays and unnecessary DUMMY messages
-- [ ] Generic command processor
 	
 ### Joystick:
 - [x] Check button output
@@ -26,9 +25,10 @@
 	- [ ] Rear
 - [x] Motors:
 	- [x] Axis left - right
-	- [x] Limit to 6V per motor? -> limit by SW
+	- [x] Limit to 6V per motor to avoid over-voltage -> limit by SW
 
 ### Common Software:
 - [x] Check power consumption by replacing Delay() with LowPower library functions to save power
-- [x] Implement ProtoThreading to avoid for example in RRCar, not allowing other operations when playing CMelodies or not allowing change range speed through button when car is in move -> NOT viable due to limitation in ArduinoThread as it only changes between threads/methods when it finishes, doesn't solve the problem when you have a Delay()/Sleep() in the current method and you don't want to block other processes when waiting for the current one.
+- [x] [Discarded] Implement ProtoThreading to avoid for example in RRCar, not allowing other operations when playing CMelodies or not allowing change range speed through button when car is in move -> NOT viable due to limitation in ArduinoThread as it only changes between threads/methods when it finishes, doesn't solve the problem when you have a Delay()/Sleep() in the current method and you don't want to block other processes when waiting for the current one.
+- [x] Add a timeout after X minutes in Idle mode -> add input into some interrupt to wake it up, if not possible then use Arduino's embbeded Reset button
 - [ ] Implement an alternative to process other processes while the current execution is in Delay()/Sleep()

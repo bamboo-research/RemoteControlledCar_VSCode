@@ -103,7 +103,8 @@
 #define NOTE_REDONDA_PAUSA 1320
 #pragma endregion
 
-enum EMelodies { Fanfarria, DogPower, ThirdPhase, R2D2, Ohhh, Uhoh };
+enum EMelodies { Fanfarria, DogPower, ThirdPhase, R2D2, Ohhh, Uhoh,
+				 R2D2_2, CloseEncounters, Ariel, Uhoh2, Squeak, Waka, Catcall, Ohhh2 };
 
 //
 class CMelodies
@@ -120,7 +121,6 @@ class CMelodies
 	private:
 		int m_pin; 		// Pin del altavoz
 		void Glis(int note1, int note2, int rate); // Glissando
-		void Trem(int note1, int note2, int rate); // Tremolo
 		
 		void melody0(); // MELODY_FANFARRIA 0
 		void melody1(); // MELODY_PODER_PERRUNO
@@ -128,4 +128,14 @@ class CMelodies
 		void melody3(); // MELODY_R2D2
 		void melody4(); // MELODY_OHHH
 		void melody5(); // MELODY_UHOH
+
+		void r2D2();
+		void closeEncounters();
+		void ariel();
+		void uhoh();
+		void squeak();
+		void waka();
+		void catcall();
+		void ohhh();
+		void Beep(int frequencyHertz, long milliseconds);
 };

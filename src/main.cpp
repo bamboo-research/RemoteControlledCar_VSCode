@@ -71,7 +71,7 @@
 
     void setup() {
         #if defined(TEST_BT_UNO)
-        m_bluetooth = new CBluetooth(2, 3, HC_06);
+        m_bluetooth = new CBluetooth(3, 2, HC_06);
         #endif
         #if defined(TEST_BT_NANO)
         m_bluetooth = new CBluetooth(11, 12, HC_05);

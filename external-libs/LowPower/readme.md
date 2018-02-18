@@ -63,6 +63,6 @@ Legend:
 - WDT: all power save modes
 - ADC: IDLE, ADC
 
-[Source 1](https://help.github.com/articles/organizing-information-with-tables)
+[Source 1](http://www.rocketscream.com/blog/2011/07/04/lightweight-low-power-arduino-library/)
 
 [Source 2](http://www.gammon.com.au/power)

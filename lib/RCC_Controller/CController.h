@@ -10,7 +10,7 @@ Version:	1.0
 #include "CCommon.h"
 
 const int iInButtonX = 4;
-const int iInButtonA = 3;
+const int iInButtonA = 3;			//Common.PowerDown is linked to INT 1 for wake up -> INPUT 3 is now linked to button 'A' which is used to wake-up when pressed
 const int iInButtonB = 5;
 const int iOutLed = 13;
 const int iOutRx = 11;
@@ -18,6 +18,7 @@ const int iOutTx = 12;
 const int iInAxisX = 0;
 const int iInAxisY = 1;
 const int iInButton = 8;
+const unsigned long lTimeToPowerDown = 60000;
 
 class CController
 {
@@ -47,6 +48,7 @@ private:
 	int m_iX, m_iY;
 	int m_iCurrentSpeed, m_iCurrentMovement;
 	String m_sSendValue, m_sLastCmd;
+	unsigned long m_lLastTime;
 
 	// Private methods
 };

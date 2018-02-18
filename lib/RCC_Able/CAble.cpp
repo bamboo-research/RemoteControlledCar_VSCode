@@ -8,15 +8,29 @@ Version:	1.0
 
 #pragma region Public methods
 
-void CAble::setup() {
-    // put your setup code here, to run once:
+void CAble::setup()
+{
+	m_lLastTime = millis();
     m_bluetooth->Begin(9600);
-	pinMode(iOutLed1, OUTPUT);
+	pinMode(iOutLed, OUTPUT);
 }
 
-void CAble::loop() {
-	// Sleep to save power
-	Common.Sleep(SLEEP_120MS);
+void CAble::loop()
+{
+	// // Sleep to save power -> resets the millis() value so use delay
+	// Common.Sleep(SLEEP_120MS);
+	delay(120);
+	
+	// check if enter Power Down to save battery
+	if (millis() - m_lLastTime >= lTimeToPowerDown)
+	{
+		digitalWrite(iOutSpeaker, HIGH);		//advise entering power down mode
+		delay(150);
+		digitalWrite(iOutSpeaker, LOW);
+		digitalWrite(iOutLed, LOW);				//switch off to save power
+		Common.PowerDown();
+		m_sLastCmd = "RCC -> PowerDown off";
+	}
 
 	//read from Bluetooth module once woken up
 	m_sReadValue = m_bluetooth->Receive();
@@ -43,6 +57,7 @@ void CAble::loop() {
 				ProcessButtons(m_sCmd);
 			}
 			m_sCmd = "";
+			m_lLastTime = millis();	//reset count to PowerDown
 		}
 	}
 }
@@ -71,10 +86,10 @@ void CAble::ProcessButtons(String sCommand)
 	if (sCommand == "j")
 	{
 		//switch-on LED
-		if (digitalRead(iOutLed1) == LOW)
-			digitalWrite(iOutLed1, HIGH);
+		if (digitalRead(iOutLed) == LOW)
+			digitalWrite(iOutLed, HIGH);
 		else
-			digitalWrite(iOutLed1, LOW);
+			digitalWrite(iOutLed, LOW);
 	}
 	else if (sCommand == "x")
 	{
@@ -83,10 +98,6 @@ void CAble::ProcessButtons(String sCommand)
 	else if (sCommand == "a")
 	{
 		m_melodies->PlayMelody(DogPower);
-	}
-	else if (sCommand == "h")
-	{
-		m_melodies->PlayMelody(R2D2);
 	}
 	else if (sCommand == "b")
 	{
