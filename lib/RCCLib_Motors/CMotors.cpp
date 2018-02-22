@@ -92,6 +92,7 @@ void CMotors::ProcessMotors(const byte valueX, const byte valueY)
 	}
 
 	//set speed accordingly to command
+	//TODO: for cases Left Up/Down and Right Up/Down, set speeds at both axes
 	SetSpeed(iSpeed);
 
 	//set movements according to command
@@ -161,18 +162,24 @@ void CMotors::SetMovement(EMovements movement)
 
 void CMotors::SetSpeed(int iSpeed)
 {
-	m_iCurrentSpeed = iSpeed;
+	SetSpeed(iSpeed, iSpeed - 3);	//there is a hardware offset in ENB, so we compesate it by software
+}
+
+void CMotors::SetSpeed(int iSpeedLeft, int iSpeedRight)
+{
+	m_iCurrentSpeed = max(iSpeedLeft, iSpeedRight);
 	if (!m_bIsVirtualMotor)
 	{
-		if (iSpeed <= SPEED_UNIT)			//slow down speed to avoid sudden stop.
+		if (iSpeedLeft <= SPEED_UNIT)				//slow down speed to avoid sudden stop.
 		{
 			analogWrite(m_iPinENA, SPEED_UNIT / 3);	//ENA needs more time to stop so set smaller speed value
 			analogWrite(m_iPinENB, SPEED_UNIT / 2);
 			delay(50);
 		}
 
-		analogWrite(m_iPinENA, iSpeed);
-		analogWrite(m_iPinENB, iSpeed - 3);	//there is a hardware offset in ENB, so we compesate it by software
+		//after slow down, set final speed
+		analogWrite(m_iPinENA, iSpeedLeft);
+		analogWrite(m_iPinENB, iSpeedRight);
 	}
 }
 

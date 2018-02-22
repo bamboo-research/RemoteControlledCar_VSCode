@@ -105,4 +105,5 @@ public:
 		// Private methods
 		void SetMovement(EMovements movement);
 		void SetSpeed(int iSpeed);
+		void SetSpeed(int iSpeedLeft, int iSpeedRight);
 };

@@ -26,7 +26,7 @@ Software for Arduino Uno-based remote controlled car together with a Arduino Nan
 
 ### Software structure
 
-The software is splitted into [Abstraction Layers](https://en.wikipedia.org/wiki/Abstraction_layer) so the responsability of each layer are very limited and will make easier the growth and maintenance of the project in a Architectural point of view. Combined with a objected-oriented language such as C++ accepted by Arduino, makes the implementation closer to this approach.
+The software is splitted into [Abstraction Layers](https://en.wikipedia.org/wiki/Abstraction_layer) so the responsability of each layer are very limited and will make easier the growth and maintenance of the project in a Architectural point of view. Using a objected-oriented language such as C++ accepted by Arduino, makes the implementation closer to this approach.
 
 ### Libraries functionalities -> TODO: move to Wiki section
 
@@ -47,8 +47,10 @@ Communicates with the bluetooth (BT) module [HC-05 or HC-06] via [SoftwareSerial
 
 #### Joystick library
 Reads the axis values from the Joystick. List of functions:
-- 
+- ReadAxisX(): returns X coordinate of the joystick
+- ReadAxisY(): returns Y coordinate of the joystick
+- ReadButton(): returns button value of the joystick. LOW if pressed and HIGH otherwise.
 
 TODO: electrical schematics
 
-TODO: photos car and controller prototypes
+TODO: photos car and controller final build
