@@ -35,6 +35,48 @@ public:
         //NOTE: Nano transmits garbage characters to PC through HardwareSerial if USART0 is OFF
         LowPower.idle(period, ADC_ON, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
     };
+
+    static void Sleep(int iPeriod)
+    {
+        period_t period;
+        switch (iPeriod)
+        {
+            case 15:
+                period = SLEEP_15MS;
+                break;
+            case 30:
+                period = SLEEP_30MS;
+                break;
+            case 60:
+                period = SLEEP_60MS;
+                break;
+            case 120:
+                period = SLEEP_120MS;
+                break;
+            case 250:
+                period = SLEEP_250MS;
+                break;
+            case 500:
+                period = SLEEP_500MS;
+                break;
+            case 1000:
+                period = SLEEP_1S;
+                break;
+            case 2000:
+                period = SLEEP_2S;
+                break;
+            case 4000:
+                period = SLEEP_4S;
+                break;
+            case 8000:
+                period = SLEEP_8S;
+                break;
+            default:
+                period = SLEEP_250MS;   //default period
+                break;
+        }
+        LowPower.idle(period, ADC_ON, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
+    };
 private:
     // Disable creating instances of this object
     CCommon() { };
