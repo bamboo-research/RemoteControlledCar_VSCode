@@ -21,8 +21,9 @@ public:
 
     static void PowerDown()
     {
-        // Allow wake up interrupt when input pin detects LOW signal. Seems that FALLING/RISING/CHANGE signals doesn't work to wake-up arduino from PowerDown
-        // Interrupt 0 corresponds I/O pin 2 and Interrupt 1 corresponds I/O pin 3 on Uno/Nano.
+        // NOTE: Seems that FALLING/RISING/CHANGE signals doesn't work to wake-up arduino from PowerDown.
+        // Allow wake up interrupt when input pin detects LOW signal.
+        // Wake-up pin attached to Interrupt 1 which corresponds I/O pin 3 on Uno/Nano.
         attachInterrupt(1, WakeUp, LOW);
         
         // Enter power down state with ADC and BOD module disabled. Wake up when interrupt detected
@@ -30,9 +31,17 @@ public:
         //delay(75); // allows the arduino to fully wake up.
     };
 
+    static void PowerDown2()
+    {
+        // Same as PowerDown() but wake-up pin attached to Interrupt 0 which corresponds I/O pin 2 on Uno/Nano.
+        attachInterrupt(0, WakeUp2, LOW);
+        LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
+    };
+
     static void Sleep(period_t period)
     {
         //NOTE: Nano transmits garbage characters to PC through HardwareSerial if USART0 is OFF
+        //NOTE2: every time sleeps and wake-ups, the millis() value is RESET, so take care when using Sleep() if millis() is used in program
         LowPower.idle(period, ADC_ON, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
     };
 
@@ -86,6 +95,11 @@ private:
         // Just a handler for the pin interrupt.
         // Disable external interrupt on wake up pin.
         detachInterrupt(1);
+    };
+
+    static void WakeUp2()
+    {
+        detachInterrupt(0);
     };
 };
 

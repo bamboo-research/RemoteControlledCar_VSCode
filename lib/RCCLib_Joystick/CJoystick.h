@@ -1,5 +1,8 @@
 #include <arduino.h>
 
+enum EDirection { None, Left, Right, Up, Down };
+enum EAxis { AxisX, AxisY };
+
 class CJoystick
 {
 	public:
@@ -18,10 +21,22 @@ class CJoystick
 		int ReadAxisY();
 		int ReadButton();
 
+		// Data accessors
+		EDirection GetDirectionX()
+		{
+			return m_DirectionX;
+		};
+
+		EDirection GetDirectionY()
+		{
+			return m_DirectionY;
+		};
 	private:
 		// Fields
 		int m_iPinAxisX, m_iPinAxisY;
 		int m_iPinButton;
+		EDirection m_DirectionX, m_DirectionY;
 
 		// Private methods
+		int CalculateValueDirection(EAxis axis);
 };
