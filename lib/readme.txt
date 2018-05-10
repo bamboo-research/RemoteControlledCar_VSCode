@@ -1,31 +1,35 @@
-RCC
-|--extra-libs
+Generic-Libraries
+|--external-libs
 |   |-- <LowPower>
+|   |-- <MD_MAX72XX>
 |--lib
 |   |-- <CommonLib>
 |   |   |-- CCommon.h
+|   |-- <Bluetooth_Lib>
+|   |   |-- CBluetooth.cpp
+|   |   |-- CBluetooth.h
+|   |-- <Joystick_Lib>
+|   |   |-- CJoystick.cpp
+|   |   |-- CJoystick.h
+|   |-- <Marquee_Lib>
+|   |   |-- CMarquee.cpp
+|   |   |-- CMarquee.h
+|   |-- <Melodies_Lib>
+|   |   |-- CMelodies.cpp
+|   |   |-- CMelodies.h
+|   |-- <Motors_Lib>
+|   |   |-- CMotors.cpp
+|   |   |-- CMotors.h
+|   |   |-- Speed_voltage.txt
+-------------
+RCC
+|--lib
 |   |-- <RCC_Able>
 |   |   |-- CAble.cpp
 |   |   |-- CAble.h
 |   |-- <RCC_Controller>
 |   |   |-- CController.cpp
 |   |   |-- CController.h
-|   |-- <RCCLib_Bluetooth>
-|   |   |-- CBluetooth.cpp
-|   |   |-- CBluetooth.h
-|   |-- <RCCLib_Joystick>
-|   |   |-- CJoystick.cpp
-|   |   |-- CJoystick.h
-|   |-- <RCCLib_Marquee>
-|   |   |-- CMarquee.cpp
-|   |   |-- CMarquee.h
-|   |-- <RCCLib_Melodies>
-|   |   |-- CMelodies.cpp
-|   |   |-- CMelodies.h
-|   |-- <RCCLib_Motors>
-|   |   |-- CMotors.cpp
-|   |   |-- CMotors.h
-|   |   |-- Speed_voltage.txt
 |   |-- <RCCTest_Car>
 |   |   |-- CTestCar.cpp
 |   |   |-- CTestCar.h
@@ -35,7 +39,7 @@ RCC
 |--src
 |   |- main.cpp
 |   |- main.h    
------------
+-------------
 This directory is intended for the project specific (private) libraries.
 PlatformIO will compile them to static libraries and link to executable file.
 

@@ -26,7 +26,7 @@ public:
 	// Contructors
 	CController()
 	{
-		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_05);		//RX, TX, EBluetoothAdapter
+		m_bluetooth = new CBluetooth(iOutRx, iOutTx, EBluetoothAdapter::HC_05);	//RX, TX, EBluetoothAdapter
 		m_joystick = new CJoystick(iInAxisX, iInAxisY, iInButton);	//analogInputX, analogInputY, digitalInputButton
 		m_motors = new CMotors();									//create virtual motor to calculate motor movement, so send command only when needed
 	};
@@ -46,7 +46,8 @@ private:
 	CJoystick* m_joystick;
 	CMotors* m_motors;
 	int m_iX, m_iY;
-	int m_iCurrentSpeed, m_iCurrentMovement;
+	int m_iCurrentSpeed;
+	EMovements m_CurrentMovement;
 	String m_sSendValue, m_sLastCmd;
 	unsigned long m_lLastTime;
 

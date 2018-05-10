@@ -27,7 +27,7 @@ public:
 	// Contructors
 	CAble()
 	{
-		m_bluetooth = new CBluetooth(iOutRx, iOutTx, HC_06);	//RX, TX, EBluetoothAdapter
+		m_bluetooth = new CBluetooth(iOutRx, iOutTx, EBluetoothAdapter::HC_06);	//RX, TX, EBluetoothAdapter
 		m_motors = new CMotors(iOutLeft1, iOutLeft2, iOutRight1, iOutRight2, iOutEna, iOutEnb); //NOTE: pinENA and pinENB must be PWM pins!!!!!
 		m_melodies = new CMelodies(iOutSpeaker);
 	};

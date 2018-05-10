@@ -12,7 +12,7 @@ void CController::setup()
 {
 	m_bluetooth->Begin(9600);
 	m_iCurrentSpeed = 0;
-	m_iCurrentMovement = 0;
+	m_CurrentMovement = EMovements::Stop;
 	m_lLastTime = millis();
 	pinMode(iInButtonX, INPUT_PULLUP);
 	pinMode(iInButtonA, INPUT_PULLUP);
@@ -45,7 +45,9 @@ void CController::loop()
 				digitalRead(iInButtonB) == LOW ||
 				m_joystick->ReadButton() == LOW )	//wait while buttons are pressed instead of setting a fixed delay
 		{
-			Common.Sleep(SLEEP_30MS);
+			// // Sleep to save power -> resets the millis() value so use delay
+			// Common.Sleep(SLEEP_30MS);
+			delay(30);
 		}
 	}
 	else
@@ -58,10 +60,10 @@ void CController::loop()
 	m_iY = m_joystick->ReadAxisY();
 	m_motors->ProcessMotors((byte)m_iX, (byte)m_iY);
 	if (abs(m_motors->GetCurrentSpeed() - m_iCurrentSpeed) > 3 ||
-			m_motors->GetCurrentMovement() != m_iCurrentMovement)
+			m_motors->GetCurrentMovement() != m_CurrentMovement)
 	{
-		m_iCurrentSpeed    = m_motors->GetCurrentSpeed();
-		m_iCurrentMovement = m_motors->GetCurrentMovement();
+		m_iCurrentSpeed   = m_motors->GetCurrentSpeed();
+		m_CurrentMovement = m_motors->GetCurrentMovement();
 
 		m_bluetooth->Send(" ");		//WORKAROUND: send dummy value to ¿wake up/synchronize? bluetooth
 		m_bluetooth->SendCommand(m_iX, m_iY);
@@ -71,14 +73,15 @@ void CController::loop()
 		m_sLastCmd = "BT-> " + m_bluetooth->GetMessage() + " | Speed: " + String(m_iCurrentSpeed) + " | X: " + String(m_iX) + " | Y: " + String(m_iY);
 	
 		//sleep between transmissions
-		Common.Sleep(SLEEP_30MS);
+		// Common.Sleep(SLEEP_30MS);
+		delay(30);
 	}
 
 	// check if enter Power Down to save battery
 	if (millis() - m_lLastTime >= lTimeToPowerDown)
 	{
 		digitalWrite(iOutLed, LOW);		//switch off to save power
-		Common.PowerDown();
+		Common.PowerDownInt1();
 		m_sLastCmd = "RCC -> PowerDown off";
 	}
 }

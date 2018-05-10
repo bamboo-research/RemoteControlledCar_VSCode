@@ -28,7 +28,7 @@ void CAble::loop()
 		delay(150);
 		digitalWrite(iOutSpeaker, LOW);
 		digitalWrite(iOutLed, LOW);				//switch off to save power
-		Common.PowerDown();
+		Common.PowerDownInt1();
 		m_sLastCmd = "RCC -> PowerDown off";
 	}
 
@@ -48,11 +48,11 @@ void CAble::loop()
 		m_sCmd += m_char;			//concatenate chars until '#' end command is detected
 		if (m_char == '#')
 		{
-			if (m_bluetooth->CommandType(m_sCmd) == ArrayBytes)
+			if (m_bluetooth->CommandType(m_sCmd) == ECommandType::ArrayBytes)
 			{
 				ProcessJoystick(m_sCmd);
 			}
-			else if (m_bluetooth->CommandType(m_sCmd) == StringCommand)
+			else if (m_bluetooth->CommandType(m_sCmd) == ECommandType::StringCommand)
 			{
 				ProcessButtons(m_sCmd);
 			}
@@ -93,27 +93,27 @@ void CAble::ProcessButtons(String sCommand)
 	}
 	else if (sCommand == "x")
 	{
-		m_melodies->PlayMelody(Fanfarria);
+		m_melodies->PlayMelody(EMelodies::Fanfarria);
 	}
 	else if (sCommand == "a")
 	{
-		m_melodies->PlayMelody(DogPower);
+		m_melodies->PlayMelody(EMelodies::DogPower);
 	}
 	else if (sCommand == "b")
 	{
-		int iSpeedMode = m_motors->GetSpeedMode();
-		if (iSpeedMode == Slow)
-			m_motors->SetSpeedMode(Normal);
-		else if (iSpeedMode == Normal)
-			m_motors->SetSpeedMode(Fast);
-		else if (iSpeedMode == Fast)
-			m_motors->SetSpeedMode(Turbo);
+		ESpeedMode speed = m_motors->GetSpeedMode();
+		if (speed == ESpeedMode::Slow)
+			m_motors->SetSpeedMode(ESpeedMode::Normal);
+		else if (speed == ESpeedMode::Normal)
+			m_motors->SetSpeedMode(ESpeedMode::Fast);
+		else if (speed == ESpeedMode::Fast)
+			m_motors->SetSpeedMode(ESpeedMode::Turbo);
 		else
-			m_motors->SetSpeedMode(Slow);
+			m_motors->SetSpeedMode(ESpeedMode::Slow);
 
 		//make a sound to confirm SpeedMode
-		iSpeedMode = m_motors->GetSpeedMode();
-		for (int i = 0; i < iSpeedMode; i++)
+		speed = m_motors->GetSpeedMode();
+		for (int i = 0; i < int(speed); i++)
 		{
 			digitalWrite(iOutSpeaker, HIGH);
 			delay(50);
